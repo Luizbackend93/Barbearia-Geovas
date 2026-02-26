@@ -1,0 +1,141 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: white;
+  text-align: center;
+}
+
+header {
+  background: #111;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  border-bottom: 2px solid #d4af37;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+}
+
+h1, h2 {
+  color: #d4af37;
+}
+
+.admin-link {
+  color: #d4af37;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hero {
+  padding: 80px 20px;
+  background: linear-gradient(black, #111);
+}
+
+.hero button {
+  background: #d4af37;
+  color: black;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.hero button:hover {
+  background: gold;
+}
+
+.trabalhos {
+  padding: 50px 20px;
+}
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.galeria img {
+  width: 100%;
+  border-radius: 10px;
+  transition: transform 0.3s;
+}
+
+.galeria img:hover {
+  transform: scale(1.05);
+}
+
+.agendamento {
+  padding: 50px 20px;
+  background: #111;
+}
+
+input, select {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 250px;
+  border-radius: 5px;
+  border: none;
+}
+
+button {
+  background: #d4af37;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.card {
+  background: #222;
+  padding: 15px;
+  margin: 15px;
+  border-radius: 10px;
+}
+
+.redes {
+  padding: 50px 20px;
+  background: #000;
+  border-top: 2px solid #d4af37;
+}
+
+.social-links a {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 20px;
+  background: #d4af37;
+  color: black;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.social-links a:hover {
+  background: gold;
+  transform: scale(1.05);
+}
+
+footer {
+  background: #111;
+  padding: 20px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.login-box {
+  margin-top: 100px;
+}

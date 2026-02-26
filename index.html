@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbearia Geovas</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo-area">
+    <img src="img/logo.png.jpeg" class="logo">
+    <h1>Barbearia Geovas</h1>
+  </div>
+  <a href="login.html" class="admin-link">Área Admin</a>
+</header>
+
+<section class="hero">
+  <h2>Estilo, Precisão e Elegância</h2>
+  <button onclick="scrollToAgendamento()">Agendar Agora</button>
+</section>
+
+<section class="trabalhos">
+  <h2>🔥 Meus Trabalhos</h2>
+  <div class="galeria">
+    <img src="img/corte1.jpg.jpeg">
+    <img src="img/corte2.jpg.jpeg">
+    <img src="img/corte3.jpg.jpeg">
+     <img src="img/corte4.jpg.jpeg">
+      <img src="img/corte5.jpg.jpeg">
+    
+    
+  </div>
+</section>
+
+<section class="agendamento" id="agendamento">
+  <h2>Agendar Horário</h2>
+
+  <input type="text" id="nome" placeholder="Seu Nome">
+
+ <select id="servico">
+  <optgroup label="✂ Serviços Avulsos">
+    <option value="Corte degradê - R$30">Corte degradê - R$30</option>
+    <option value="Barba - R$15">Barba - R$15</option>
+    <option value="Pezinho - R$5">Pezinho - R$5</option>
+    <option value="Sobrancelha - R$5">Sobrancelha - R$5</option>
+    <option value="Pigmentação - R$25">Pigmentação - R$25</option>
+    <option value="Platinado - R$100">Platinado - R$100</option>
+    <option value="Luzes - R$60">Luzes - R$60</option>
+  </optgroup>
+
+  <optgroup label="💎 Planos Mensais">
+    <option value="Plano Corte + Sobrancelha - R$120">Plano Corte + Sobrancelha - R$120</option>
+    <option value="Plano Corte + Barba - R$160">Plano Corte + Barba - R$160</option>
+  </optgroup>
+</select>
+
+  <input type="date" id="data">
+  <input type="time" id="hora">
+
+  <button onclick="agendar()">Confirmar Agendamento</button>
+</section>
+
+<section class="redes">
+  <h2>📲 Siga a Barbearia Geovas</h2>
+  <div class="social-links">
+    <a href="https://instagram.com/barbearia_geovas" target="_blank">Instagram</a>
+    
+    <a href="https://wa.me/5531987930848" target="_blank">WhatsApp</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Barbearia Geovas - Todos os direitos reservados</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
