@@ -60,10 +60,10 @@ function agendar(){
 
   let duracaoServico = 90;
 
-  if(minutosSelecionados < inicio || (minutosSelecionados + duracaoServico) > fim){
-    alert("Horário fora do expediente!");
-    return;
-  }
+  if(minutosSelecionados < inicio || minutosSelecionados > fim){
+  alert("Horário fora do expediente!");
+  return;
+}
 
   let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
 
