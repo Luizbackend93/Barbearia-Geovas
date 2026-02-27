@@ -20,6 +20,7 @@ function logout(){
 }
 
 function agendar(){
+
   let nome = document.getElementById("nome").value;
   let servico = document.getElementById("servico").value;
   let data = document.getElementById("data").value;
@@ -30,27 +31,87 @@ function agendar(){
     return;
   }
 
+  let dataSelecionada = new Date(data);
+  let diaSemana = dataSelecionada.getDay(); 
+  // 0 domingo, 6 sábado
+
+  let inicio;
+  let fim;
+
+  // Domingo fechado
+  if(diaSemana === 0){
+    alert("Domingo não temos expediente.");
+    return;
+  }
+
+  // Sábado
+  if(diaSemana === 6){
+    inicio = 12 * 60;
+    fim = 17 * 60;
+  } 
+  else{
+    // Segunda a sexta
+    inicio = (15 * 60) + 30;
+    fim = 18 * 60 + 30;
+  }
+
+  let [h, m] = hora.split(":").map(Number);
+  let minutosSelecionados = (h * 60) + m;
+
+  let duracaoServico = 90;
+
+  if(minutosSelecionados < inicio || (minutosSelecionados + duracaoServico) > fim){
+    alert("Horário fora do expediente!");
+    return;
+  }
+
   let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
 
+  // Verificar conflito de horário
+  for(let ag of agendamentos){
+
+    if(ag.data === data){
+
+      let [h2, m2] = ag.hora.split(":").map(Number);
+      let minutosAgendado = (h2 * 60) + m2;
+
+      let diferenca = Math.abs(minutosSelecionados - minutosAgendado);
+
+      if(diferenca < duracaoServico){
+        alert("Este horário já está ocupado!");
+        return;
+      }
+
+    }
+
+  }
+
   agendamentos.push({nome, servico, data, hora});
+
   localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
 
   let mensagem = `Olá, meu nome é ${nome}. Quero agendar ${servico} no dia ${data} às ${hora}.`;
-  let telefone = "5531987930848"; // COLOQUE SEU NÚMERO
+
+  let telefone = "5531987930848";
+
   window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`);
 
   alert("Agendamento realizado com sucesso!");
+
 }
 
 if(window.location.pathname.includes("admin.html")){
+
   if(localStorage.getItem("logado") !== "true"){
     window.location.href = "login.html";
   }
 
   let lista = document.getElementById("listaAgendamentos");
+
   let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
 
   agendamentos.forEach((ag, index) => {
+
     lista.innerHTML += `
       <div class="card">
         <p><strong>Cliente:</strong> ${ag.nome}</p>
@@ -60,12 +121,19 @@ if(window.location.pathname.includes("admin.html")){
         <button onclick="excluir(${index})">Excluir</button>
       </div>
     `;
+
   });
+
 }
 
 function excluir(index){
+
   let agendamentos = JSON.parse(localStorage.getItem("agendamentos"));
+
   agendamentos.splice(index,1);
+
   localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
+
   location.reload();
+
 }
