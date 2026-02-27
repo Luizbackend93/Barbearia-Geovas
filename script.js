@@ -7,122 +7,150 @@ function login(){
   let pass = document.getElementById("pass").value;
 
   if(user === "Geovas" && pass === "1234"){
-    localStorage.setItem("logado", "true");
-    window.location.href = "admin.html";
-  } else {
+    localStorage.setItem("logado","true");
+    window.location.href="admin.html";
+  }else{
     alert("Login incorreto!");
   }
 }
 
 function logout(){
   localStorage.removeItem("logado");
-  window.location.href = "index.html";
+  window.location.href="index.html";
+}
+
+let dataInput = document.getElementById("data");
+
+if(dataInput){
+dataInput.addEventListener("change", gerarHorarios);
+}
+
+function gerarHorarios(){
+
+let data = document.getElementById("data").value;
+
+if(!data) return;
+
+let partes = data.split("-");
+let dataObj = new Date(partes[0], partes[1]-1, partes[2]);
+
+let dia = dataObj.getDay();
+
+let horarios = [];
+
+if(dia === 0){
+alert("Domingo não temos expediente");
+return;
+}
+
+if(dia === 6){
+
+horarios = [
+"12:00",
+"13:30",
+"15:00",
+"16:30"
+];
+
+}else{
+
+horarios = [
+"15:30",
+"17:00",
+"18:30"
+];
+
+}
+
+let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+
+let selectHora = document.getElementById("hora");
+
+selectHora.innerHTML = '<option value="">Selecione o horário</option>';
+
+horarios.forEach(h => {
+
+let ocupado = agendamentos.some(a => a.data === data && a.hora === h);
+
+if(!ocupado){
+
+let option = document.createElement("option");
+
+option.value = h;
+option.textContent = h;
+
+selectHora.appendChild(option);
+
+}
+
+});
+
 }
 
 function agendar(){
 
-  let nome = document.getElementById("nome").value;
-  let servico = document.getElementById("servico").value;
-  let data = document.getElementById("data").value;
-  let hora = document.getElementById("hora").value;
+let nome = document.getElementById("nome").value;
+let servico = document.getElementById("servico").value;
+let data = document.getElementById("data").value;
+let hora = document.getElementById("hora").value;
 
-  if(!nome || !data || !hora){
-    alert("Preencha todos os campos!");
-    return;
-  }
-
-  // CORREÇÃO DO DIA DA SEMANA
-  let partesData = data.split("-");
-  let dataSelecionada = new Date(partesData[0], partesData[1]-1, partesData[2]);
-  let diaSemana = dataSelecionada.getDay();
-
-  let inicio;
-  let fim;
-
-  // DOMINGO
-  if(diaSemana === 0){
-    alert("Domingo não temos expediente.");
-    return;
-  }
-
-  // SÁBADO
-  if(diaSemana === 6){
-    inicio = 12 * 60;
-    fim = 17 * 60;
-  } else {
-    // SEGUNDA A SEXTA
-    inicio = (15 * 60) + 30;
-    fim = (18 * 60) + 30;
-  }
-
-  let [h, m] = hora.split(":").map(Number);
-  let minutosSelecionados = (h * 60) + m;
-
-  let duracaoServico = 90;
-
-  if(minutosSelecionados < inicio || minutosSelecionados > fim){
-  alert("Horário fora do expediente!");
-  return;
+if(!nome || !data || !hora){
+alert("Preencha todos os campos!");
+return;
 }
 
-  let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
 
-  // verificar conflito
-  for(let ag of agendamentos){
+agendamentos.push({nome,servico,data,hora});
 
-    if(ag.data === data){
+localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
 
-      let [h2, m2] = ag.hora.split(":").map(Number);
-      let minutosAgendado = (h2 * 60) + m2;
+let mensagem = `Olá, meu nome é ${nome}. Quero agendar ${servico} no dia ${data} às ${hora}.`;
 
-      let diferenca = Math.abs(minutosSelecionados - minutosAgendado);
+let telefone = "5531987930848";
 
-      if(diferenca < duracaoServico){
-        alert("Este horário já está ocupado!");
-        return;
-      }
+window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`);
 
-    }
+alert("Agendamento realizado!");
 
-  }
+location.reload();
 
-  agendamentos.push({nome, servico, data, hora});
-  localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
-
-  let mensagem = `Olá, meu nome é ${nome}. Quero agendar ${servico} no dia ${data} às ${hora}.`;
-
-  let telefone = "5531987930848";
-
-  window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`);
-
-  alert("Agendamento realizado com sucesso!");
 }
 
 if(window.location.pathname.includes("admin.html")){
 
-  if(localStorage.getItem("logado") !== "true"){
-    window.location.href = "login.html";
-  }
+if(localStorage.getItem("logado") !== "true"){
+window.location.href="login.html";
+}
 
-  let lista = document.getElementById("listaAgendamentos");
-  let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+let lista = document.getElementById("listaAgendamentos");
 
-  agendamentos.forEach((ag, index) => {
-    lista.innerHTML += `
-      <div class="card">
-        <p><strong>Cliente:</strong> ${ag.nome}</p>
-        <p><strong>Serviço:</strong> ${ag.servico}</p>
-        <p><strong>Data:</strong> ${ag.data}</p>
-        <p><strong>Hora:</strong> ${ag.hora}</p>
-        <button onclick="excluir(${index})">Excluir</button>
-      </div>
-    `;
-  });
+let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+
+agendamentos.forEach((ag,index)=>{
+
+lista.innerHTML += `
+<div class="card">
+<p><strong>Cliente:</strong> ${ag.nome}</p>
+<p><strong>Serviço:</strong> ${ag.servico}</p>
+<p><strong>Data:</strong> ${ag.data}</p>
+<p><strong>Hora:</strong> ${ag.hora}</p>
+<button onclick="excluir(${index})">Excluir</button>
+</div>
+`;
+
+});
+
 }
 
 function excluir(index){
-  let agendamentos = JSON.parse(localStorage.getItem("agendamentos"));
-  agendamentos.splice(index,1);
-  localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
-  location.reload();
+
+let agendamentos = JSON.parse(localStorage.getItem("agendamentos"));
+
+agendamentos.splice(index,1);
+
+localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
+
+location.reload();
+
 }
