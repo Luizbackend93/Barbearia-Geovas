@@ -3,78 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Barbearia Geovas</title>
+
 <link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+background:#000;
+color:white;
+font-family:Arial;
+margin:0;
+padding:0;
+text-align:center;
+}
+
+header{
+padding:20px;
+border-bottom:2px solid gold;
+}
+
+h1{
+color:gold;
+}
+
+.container{
+max-width:400px;
+margin:auto;
+padding:20px;
+}
+
+input, select{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:5px;
+font-size:16px;
+}
+
+button{
+background:gold;
+border:none;
+padding:12px;
+width:100%;
+font-size:18px;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.8;
+}
+
+.whatsapp{
+margin-top:20px;
+background:#25D366;
+color:white;
+}
+
+</style>
+
 </head>
+
 <body>
 
 <header>
-  <div class="logo-area">
-    <img src="img/logo.png.jpeg" class="logo">
-    <h1>Barbearia Geovas</h1>
-  </div>
-  <a href="login.html" class="admin-link">Área Admin</a>
+
+<h1>Barbearia Geovas</h1>
+<p>Corte profissional</p>
+
 </header>
 
-<section class="hero">
-  <h2>Estilo, Precisão e Elegância</h2>
-  <button onclick="scrollToAgendamento()">Agendar Agora</button>
-</section>
 
-<section class="trabalhos">
-  <h2>🔥 Meus Trabalhos</h2>
-  <div class="galeria">
-    <img src="img/corte1.jpg.jpeg">
-    <img src="img/corte2.jpg.jpeg">
-    <img src="img/corte3.jpg.jpeg">
-     <img src="img/corte4.jpg.jpeg">
-      <img src="img/corte5.jpg.jpeg">
-    
-    
-  </div>
-</section>
+<div class="container" id="agendamento">
 
-<section class="agendamento" id="agendamento">
-  <h2>Agendar Horário</h2>
+<h2>Agendar Horário</h2>
 
-  <input type="text" id="nome" placeholder="Seu Nome">
+<input type="text" id="nome" placeholder="Seu Nome">
 
- <select id="servico">
-  <optgroup label="✂ Serviços Avulsos">
-    <option value="Corte degradê - R$30">Corte degradê - R$30</option>
-    <option value="Barba - R$15">Barba - R$15</option>
-    <option value="Pezinho - R$5">Pezinho - R$5</option>
-    <option value="Sobrancelha - R$5">Sobrancelha - R$5</option>
-    <option value="Pigmentação - R$25">Pigmentação - R$25</option>
-    <option value="Platinado - R$100">Platinado - R$100</option>
-    <option value="Luzes - R$60">Luzes - R$60</option>
-  </optgroup>
+<select id="servico">
 
-  <optgroup label="💎 Planos Mensais">
-    <option value="Plano Corte + Sobrancelha - R$120">Plano Corte + Sobrancelha - R$120</option>
-    <option value="Plano Corte + Barba - R$160">Plano Corte + Barba - R$160</option>
-  </optgroup>
+<option>Corte degradê - R$30</option>
+<option>Barba - R$15</option>
+<option>Pezinho - R$5</option>
+<option>Sobrancelha - R$5</option>
+<option>Pigmentação - R$25</option>
+<option>Platinado - R$100</option>
+<option>Luzes - R$60</option>
+
 </select>
 
-  <input type="date" id="data">
-  <input type="time" id="hora">
+<input type="date" id="data">
 
-  <button onclick="agendar()">Confirmar Agendamento</button>
-</section>
+<select id="hora">
 
-<section class="redes">
-  <h2>📲 Siga a Barbearia Geovas</h2>
-  <div class="social-links">
-    <a href="https://instagram.com/barbearia_geovas" target="_blank">Instagram</a>
-    
-    <a href="https://wa.me/5531987930848" target="_blank">WhatsApp</a>
-  </div>
-</section>
+<option value="">Escolha um horário</option>
+<option>08:00</option>
+<option>09:30</option>
+<option>11:00</option>
+<option>12:30</option>
+<option>14:00</option>
+<option>15:30</option>
+<option>17:00</option>
+<option>18:30</option>
 
-<footer>
-  <p>© 2026 Barbearia Geovas - Todos os direitos reservados</p>
-</footer>
+</select>
+
+<button onclick="agendar()">Confirmar Agendamento</button>
+
+<button class="whatsapp" onclick="window.open('https://wa.me/5531987930848')">
+Falar no WhatsApp
+</button>
+
+</div>
+
 
 <script src="script.js"></script>
+
 </body>
 </html>
