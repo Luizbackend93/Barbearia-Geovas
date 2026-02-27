@@ -6,7 +6,7 @@ function login(){
   let user = document.getElementById("user").value;
   let pass = document.getElementById("pass").value;
 
-  if(user === "Geovas" && pass === "1234"){
+  if(user === "Geovane" && pass === "171nortesul"){
     localStorage.setItem("logado","true");
     window.location.href="admin.html";
   }else{
