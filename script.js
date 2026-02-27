@@ -1,139 +1,99 @@
-function scrollToAgendamento(){
-  document.getElementById("agendamento").scrollIntoView({behavior:"smooth"});
+let selectHora = document.getElementById("hora");
+let inputData = document.getElementById("data");
+
+inputData.addEventListener("change", gerarHorarios);
+
+function gerarHorarios(){
+
+let data = new Date(inputData.value);
+
+let dia = data.getDay();
+
+selectHora.innerHTML = "<option>Selecione o horário</option>";
+
+let horarios = [];
+
+if(dia === 0){
+
+alert("Domingo não temos expediente");
+
+return;
+
 }
 
-function login(){
-  let user = document.getElementById("user").value;
-  let pass = document.getElementById("pass").value;
+if(dia === 6){
 
-  if(user === "Geovas" && pass === "1234"){
-    localStorage.setItem("logado", "true");
-    window.location.href = "admin.html";
-  } else {
-    alert("Login incorreto!");
-  }
+horarios = [
+"12:00",
+"13:30",
+"15:00"
+];
+
+}else{
+
+horarios = [
+"15:30",
+"17:00"
+];
+
 }
 
-function logout(){
-  localStorage.removeItem("logado");
-  window.location.href = "index.html";
+let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+
+horarios.forEach(horario => {
+
+let ocupado = agendamentos.some(ag => 
+ag.data === inputData.value && ag.hora === horario
+);
+
+if(!ocupado){
+
+let option = document.createElement("option");
+
+option.value = horario;
+
+option.textContent = horario;
+
+selectHora.appendChild(option);
+
+}
+
+});
+
 }
 
 function agendar(){
 
-  let nome = document.getElementById("nome").value;
-  let servico = document.getElementById("servico").value;
-  let data = document.getElementById("data").value;
-  let hora = document.getElementById("hora").value;
+let nome = document.getElementById("nome").value;
 
-  if(!nome || !data || !hora){
-    alert("Preencha todos os campos!");
-    return;
-  }
+let servico = document.getElementById("servico").value;
 
-  let dataSelecionada = new Date(data);
-  let diaSemana = dataSelecionada.getDay(); 
-  // 0 domingo, 6 sábado
+let data = document.getElementById("data").value;
 
-  let inicio;
-  let fim;
+let hora = document.getElementById("hora").value;
 
-  // Domingo fechado
-  if(diaSemana === 0){
-    alert("Domingo não temos expediente.");
-    return;
-  }
+if(!nome || !data || hora === "Selecione o horário"){
 
-  // Sábado
-  if(diaSemana === 6){
-    inicio = 12 * 60;
-    fim = 17 * 60;
-  } 
-  else{
-    // Segunda a sexta
-    inicio = (15 * 60) + 30;
-    fim = 18 * 60 + 30;
-  }
+alert("Preencha todos os campos");
 
-  let [h, m] = hora.split(":").map(Number);
-  let minutosSelecionados = (h * 60) + m;
-
-  let duracaoServico = 90;
-
-  if(minutosSelecionados < inicio || (minutosSelecionados + duracaoServico) > fim){
-    alert("Horário fora do expediente!");
-    return;
-  }
-
-  let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
-
-  // Verificar conflito de horário
-  for(let ag of agendamentos){
-
-    if(ag.data === data){
-
-      let [h2, m2] = ag.hora.split(":").map(Number);
-      let minutosAgendado = (h2 * 60) + m2;
-
-      let diferenca = Math.abs(minutosSelecionados - minutosAgendado);
-
-      if(diferenca < duracaoServico){
-        alert("Este horário já está ocupado!");
-        return;
-      }
-
-    }
-
-  }
-
-  agendamentos.push({nome, servico, data, hora});
-
-  localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
-
-  let mensagem = `Olá, meu nome é ${nome}. Quero agendar ${servico} no dia ${data} às ${hora}.`;
-
-  let telefone = "5531987930848";
-
-  window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`);
-
-  alert("Agendamento realizado com sucesso!");
+return;
 
 }
 
-if(window.location.pathname.includes("admin.html")){
+let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
 
-  if(localStorage.getItem("logado") !== "true"){
-    window.location.href = "login.html";
-  }
+agendamentos.push({nome,servico,data,hora});
 
-  let lista = document.getElementById("listaAgendamentos");
+localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
 
-  let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+let mensagem = `Olá, meu nome é ${nome}. Quero agendar ${servico} no dia ${data} às ${hora}`;
 
-  agendamentos.forEach((ag, index) => {
+let telefone = "5531987930848";
 
-    lista.innerHTML += `
-      <div class="card">
-        <p><strong>Cliente:</strong> ${ag.nome}</p>
-        <p><strong>Serviço:</strong> ${ag.servico}</p>
-        <p><strong>Data:</strong> ${ag.data}</p>
-        <p><strong>Hora:</strong> ${ag.hora}</p>
-        <button onclick="excluir(${index})">Excluir</button>
-      </div>
-    `;
+window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`);
 
-  });
+alert("Agendamento realizado!");
 
-}
-
-function excluir(index){
-
-  let agendamentos = JSON.parse(localStorage.getItem("agendamentos"));
-
-  agendamentos.splice(index,1);
-
-  localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
-
-  location.reload();
+location.reload();
 
 }
