@@ -31,24 +31,26 @@ function agendar(){
     return;
   }
 
-  let dataSelecionada = new Date(data);
-  let diaSemana = dataSelecionada.getDay(); // 0=domingo
+  // CORREÇÃO DO DIA DA SEMANA
+  let partesData = data.split("-");
+  let dataSelecionada = new Date(partesData[0], partesData[1]-1, partesData[2]);
+  let diaSemana = dataSelecionada.getDay();
 
   let inicio;
   let fim;
 
-  // domingo fechado
+  // DOMINGO
   if(diaSemana === 0){
     alert("Domingo não temos expediente.");
     return;
   }
 
-  // sábado
+  // SÁBADO
   if(diaSemana === 6){
     inicio = 12 * 60;
     fim = 17 * 60;
-  }else{
-    // segunda a sexta
+  } else {
+    // SEGUNDA A SEXTA
     inicio = (15 * 60) + 30;
     fim = (18 * 60) + 30;
   }
@@ -65,7 +67,7 @@ function agendar(){
 
   let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
 
-  // verificar se horário já está ocupado
+  // verificar conflito
   for(let ag of agendamentos){
 
     if(ag.data === data){
@@ -88,12 +90,12 @@ function agendar(){
   localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
 
   let mensagem = `Olá, meu nome é ${nome}. Quero agendar ${servico} no dia ${data} às ${hora}.`;
+
   let telefone = "5531987930848";
 
   window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`);
 
   alert("Agendamento realizado com sucesso!");
-
 }
 
 if(window.location.pathname.includes("admin.html")){
@@ -116,7 +118,6 @@ if(window.location.pathname.includes("admin.html")){
       </div>
     `;
   });
-
 }
 
 function excluir(index){
