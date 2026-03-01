@@ -139,3 +139,42 @@ footer {
 .login-box {
   margin-top: 100px;
 }
+/* CARROSSEL DE FOTOS */
+
+.carrossel{
+  position: relative;
+  max-width: 400px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.slides{
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slide{
+  width: 100%;
+  border-radius: 10px;
+}
+
+.prev, .next{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #d4af37;
+  color: black;
+  border: none;
+  font-size: 25px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.prev{
+  left: 10px;
+}
+
+.next{
+  right: 10px;
+}
