@@ -154,3 +154,29 @@ localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
 location.reload();
 
 }
+
+
+/* ============================= */
+/* CARROSSEL DE FOTOS */
+/* ============================= */
+
+let slideIndex = 0;
+
+function mudarSlide(direcao){
+
+const slides = document.querySelector(".slides");
+const total = document.querySelectorAll(".slide").length;
+
+slideIndex += direcao;
+
+if(slideIndex < 0){
+slideIndex = total - 1;
+}
+
+if(slideIndex >= total){
+slideIndex = 0;
+}
+
+slides.style.transform = "translateX(" + (-slideIndex * 100) + "%";
+
+}
