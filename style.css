@@ -155,7 +155,7 @@ footer {
 
 .slide{
   width: 100%;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
 .prev, .next{
@@ -166,10 +166,9 @@ footer {
   color: black;
   border: none;
   font-size: 25px;
-  padding: 12px 18px;
+  padding: 10px 15px;
   cursor: pointer;
   border-radius: 50%;
-  z-index: 10;
 }
 }
 
