@@ -174,9 +174,9 @@ footer {
 }
 
 .prev{
-  left: 10px;
+  left: -40px;
 }
 
 .next{
-  right: 10px;
+  right: -40px;
 }
