@@ -23,15 +23,23 @@
 
 <section class="trabalhos">
   <h2>🔥 Meus Trabalhos</h2>
-  <div class="galeria">
-    <img src="img/corte1.jpg.jpeg">
-    <img src="img/corte2.jpg.jpeg">
-    <img src="img/corte3.jpg.jpeg">
-     <img src="img/corte4.jpg.jpeg">
-      <img src="img/corte5.jpg.jpeg">
-    
-    
-  </div>
+
+<div class="carrossel">
+
+<button class="prev" onclick="mudarSlide(-1)">❮</button>
+
+<div class="slides">
+<img src="img/corte1.jpg.jpeg" class="slide">
+<img src="img/corte2.jpg.jpeg" class="slide">
+<img src="img/corte3.jpg.jpeg" class="slide">
+<img src="img/corte4.jpg.jpeg" class="slide">
+<img src="img/corte5.jpg.jpeg" class="slide">
+</div>
+
+<button class="next" onclick="mudarSlide(1)">❯</button>
+
+</div>
+
 </section>
 
 <section class="agendamento" id="agendamento">
@@ -57,17 +65,19 @@
 </select>
 
   <input type="date" id="data">
-  <select id="hora">
+
+<select id="hora">
 <option value="">Selecione o horário</option>
 </select>
-  <button onclick="agendar()">Confirmar Agendamento</button>
+
+<button onclick="agendar()">Confirmar Agendamento</button>
+
 </section>
 
 <section class="redes">
   <h2>📲 Siga a Barbearia Geovas</h2>
   <div class="social-links">
     <a href="https://instagram.com/barbearia_geovas" target="_blank">Instagram</a>
-    
     <a href="https://wa.me/5531987930848" target="_blank">WhatsApp</a>
   </div>
 </section>
