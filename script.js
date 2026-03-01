@@ -176,7 +176,6 @@ slideIndex = total - 1;
 if(slideIndex >= total){
 slideIndex = 0;
 }
-
-slides.style.transform = "translateX(" + (-slideIndex * 100) + "%";
+slides.style.transform = "translateX(" + (-slideIndex * 100) + "%)";
 
 }
