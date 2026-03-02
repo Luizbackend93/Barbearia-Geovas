@@ -1,3 +1,17 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB_uu53SgjofpYcSRQEhuyvOKxPOd99S_s",
+  authDomain: "barbearia-geovas.firebaseapp.com",
+  projectId: "barbearia-geovas",
+  storageBucket: "barbearia-geovas.firebasestorage.app",
+  messagingSenderId: "848356421319",
+  appId: "1:848356421319:web:c359ec40a1c664863698e2"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 function scrollToAgendamento(){
   document.getElementById("agendamento").scrollIntoView({behavior:"smooth"});
 }
@@ -32,7 +46,7 @@ mostrarAgendamentos();
 };
 
 
-function gerarHorarios(){
+async function gerarHorarios(){
 
 let data = document.getElementById("data").value;
 
@@ -69,8 +83,14 @@ horarios = [
 
 }
 
-let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+const querySnapshot = await getDocs(collection(db, "agendamentos"));
 
+let agendamentos = [];
+
+querySnapshot.forEach((doc) => {
+  agendamentos.push(doc.data());
+});
+  
 let selectHora = document.getElementById("hora");
 
 selectHora.innerHTML = '<option value="">Selecione o horário</option>';
@@ -94,7 +114,7 @@ selectHora.appendChild(option);
 
 }
 
-function agendar(){
+async function agendar(){
 
 let nome = document.getElementById("nome").value;
 let servico = document.getElementById("servico").value;
@@ -106,11 +126,12 @@ alert("Preencha todos os campos!");
 return;
 }
 
-let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
-
-agendamentos.push({nome,servico,data,hora});
-
-localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
+await addDoc(collection(db, "agendamentos"), {
+  nome: nome,
+  servico: servico,
+  data: data,
+  hora: hora
+});
 
 let mensagem = `Olá, meu nome é ${nome}. Quero agendar ${servico} no dia ${data} às ${hora}.`;
 
@@ -123,6 +144,9 @@ alert("Agendamento realizado!");
 location.reload();
 
 }
+/* ============================= */
+/* ADMIN */
+/* ============================= */
 
 if(window.location.pathname.includes("admin.html")){
 
@@ -130,11 +154,24 @@ if(localStorage.getItem("logado") !== "true"){
 window.location.href="login.html";
 }
 
+carregarAdmin();
+
+}
+
+async function carregarAdmin(){
+
 let lista = document.getElementById("listaAgendamentos");
 
-let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+if(!lista) return;
 
-agendamentos.forEach((ag,index)=>{
+lista.innerHTML = "";
+
+const querySnapshot = await getDocs(collection(db, "agendamentos"));
+
+querySnapshot.forEach((docItem) => {
+
+let ag = docItem.data();
+let id = docItem.id;
 
 lista.innerHTML += `
 <div class="card">
@@ -142,7 +179,7 @@ lista.innerHTML += `
 <p><strong>Serviço:</strong> ${ag.servico}</p>
 <p><strong>Data:</strong> ${ag.data}</p>
 <p><strong>Hora:</strong> ${ag.hora}</p>
-<button onclick="excluir(${index})">Excluir</button>
+<button onclick="excluir('${id}')">Excluir</button>
 </div>
 `;
 
@@ -150,17 +187,16 @@ lista.innerHTML += `
 
 }
 
-function excluir(index){
+async function excluir(id){
 
-let agendamentos = JSON.parse(localStorage.getItem("agendamentos"));
+await deleteDoc(doc(db, "agendamentos", id));
 
-agendamentos.splice(index,1);
+alert("Agendamento excluído!");
 
-localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
-
-location.reload();
+carregarAdmin();
 
 }
+
 
 
 /* ============================= */
@@ -190,17 +226,20 @@ slides.style.transform = "translateX(" + (-slideIndex * 100) + "%)";
 /* ============================= */
 /* MOSTRAR AGENDAMENTOS */
 /* ============================= */
-function mostrarAgendamentos(){
+
+async function mostrarAgendamentos(){
 
 let lista = document.getElementById("lista");
 
 if(!lista) return;
 
-let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
-
 lista.innerHTML = "";
 
-agendamentos.forEach((ag)=>{
+const querySnapshot = await getDocs(collection(db, "agendamentos"));
+
+querySnapshot.forEach((doc) => {
+
+let ag = doc.data();
 
 let li = document.createElement("li");
 
