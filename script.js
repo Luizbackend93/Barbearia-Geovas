@@ -19,11 +19,18 @@ function logout(){
   window.location.href="index.html";
 }
 
+window.onload = function(){
+
 let dataInput = document.getElementById("data");
 
 if(dataInput){
 dataInput.addEventListener("change", gerarHorarios);
 }
+
+mostrarAgendamentos();
+
+};
+
 
 function gerarHorarios(){
 
@@ -177,5 +184,30 @@ if(slideIndex >= total){
 slideIndex = 0;
 }
 slides.style.transform = "translateX(" + (-slideIndex * 100) + "%)";
+
+}
+
+/* ============================= */
+/* MOSTRAR AGENDAMENTOS */
+/* ============================= */
+function mostrarAgendamentos(){
+
+let lista = document.getElementById("lista");
+
+if(!lista) return;
+
+let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+
+lista.innerHTML = "";
+
+agendamentos.forEach((ag)=>{
+
+let li = document.createElement("li");
+
+li.innerHTML = `${ag.nome} - ${ag.servico} - ${ag.data} às ${ag.hora}`;
+
+lista.appendChild(li);
+
+});
 
 }
