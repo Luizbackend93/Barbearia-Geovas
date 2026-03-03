@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB_uu53SgjofpYcSRQEhuyvOKxPOd99S_s",
@@ -36,6 +36,7 @@ window.logout = function(){
 window.onload = function(){
 
 let dataInput = document.getElementById("data");
+  
 
 if(dataInput){
 dataInput.addEventListener("change", gerarHorarios);
@@ -51,6 +52,10 @@ async function gerarHorarios(){
 let data = document.getElementById("data").value;
 
 if(!data) return;
+
+// Converte para 00/00/0000
+let partesFormat = data.split("-");
+let dataFormatada = `${partesFormat[2]}/${partesFormat[1]}/${partesFormat[0]}`;
 
 let partes = data.split("-");
 let dataObj = new Date(partes[0], partes[1]-1, partes[2]);
@@ -97,7 +102,7 @@ selectHora.innerHTML = '<option value="">Selecione o horário</option>';
 
 horarios.forEach(h => {
 
-let ocupado = agendamentos.some(a => a.data === data && a.hora === h);
+let ocupado = agendamentos.some(a => a.data === dataFormatada && a.hora === h);
 
 if(!ocupado){
 
@@ -118,10 +123,27 @@ window.agendar = async function(){
   
 let nome = document.getElementById("nome").value;
 let servico = document.getElementById("servico").value;
-let data = document.getElementById("data").value;
+let dataInput = document.getElementById("data").value;
+let hoje = new Date();
+let partesData = dataInput.split("-");
+let dataEscolhida = new Date(partesData[0], partesData[1]-1, partesData[2]);
+
+if(dataEscolhida < hoje.setHours(0,0,0,0)){
+  alert("Não é possível agendar em datas passadas!");
+  return;
+}
+
+if(!dataInput){
+  alert("Escolha uma data!");
+  return;
+}
+
+// Converte 2026-03-02 → 02/03/2026
+let partes = dataInput.split("-");
+let dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
 let hora = document.getElementById("hora").value;
 
-if(!nome || !data || !hora){
+if(!nome || !dataInput || !hora){
 alert("Preencha todos os campos!");
 return;
 }
@@ -129,11 +151,11 @@ return;
 await addDoc(collection(db, "agendamentos"), {
   nome: nome,
   servico: servico,
-  data: data,
+ data: dataFormatada,
   hora: hora
 });
 
-let mensagem = `Olá, meu nome é ${nome}. Quero agendar ${servico} no dia ${data} às ${hora}.`;
+let mensagem = `Olá, meu nome é ${nome}. Quero agendar ${servico} no dia ${dataFormatada} às ${hora}.`;
 
 let telefone = "5531987930848";
 
@@ -166,7 +188,10 @@ if(!lista) return;
 
 lista.innerHTML = "";
 
-const querySnapshot = await getDocs(collection(db, "agendamentos"));
+import { query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const q = query(collection(db, "agendamentos"), orderBy("data"));
+const querySnapshot = await getDocs(q);
 
 querySnapshot.forEach((docItem) => {
 
