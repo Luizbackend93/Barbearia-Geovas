@@ -1,5 +1,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB_uu53SgjofpYcSRQEhuyvOKxPOd99S_s",
@@ -124,34 +134,37 @@ window.agendar = async function(){
 let nome = document.getElementById("nome").value;
 let servico = document.getElementById("servico").value;
 let dataInput = document.getElementById("data").value;
-let hoje = new Date();
-let partesData = dataInput.split("-");
-let dataEscolhida = new Date(partesData[0], partesData[1]-1, partesData[2]);
-
-if(dataEscolhida < hoje.setHours(0,0,0,0)){
-  alert("Não é possível agendar em datas passadas!");
-  return;
-}
 
 if(!dataInput){
   alert("Escolha uma data!");
   return;
 }
 
-// Converte 2026-03-02 → 02/03/2026
+let hoje = new Date();
+hoje.setHours(0,0,0,0);
+
+let partesData = dataInput.split("-");
+let dataEscolhida = new Date(partesData[0], partesData[1]-1, partesData[2]);
+
+if(dataEscolhida < hoje){
+  alert("Não é possível agendar em datas passadas!");
+  return;
+}
+
+// Converter para 00/00/0000
 let partes = dataInput.split("-");
 let dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
 let hora = document.getElementById("hora").value;
 
-if(!nome || !dataInput || !hora){
-alert("Preencha todos os campos!");
-return;
+if(!nome || !hora){
+  alert("Preencha todos os campos!");
+  return;
 }
 
 await addDoc(collection(db, "agendamentos"), {
   nome: nome,
   servico: servico,
- data: dataFormatada,
+  data: dataFormatada,
   hora: hora
 });
 
