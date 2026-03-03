@@ -10,6 +10,12 @@ import {
   query,
   orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB_uu53SgjofpYcSRQEhuyvOKxPOd99S_s",
@@ -21,26 +27,29 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 window.scrollToAgendamento = function(){
   document.getElementById("agendamento").scrollIntoView({behavior:"smooth"});
 }
 
-window.login = function(){
-  let user = document.getElementById("user").value;
-  let pass = document.getElementById("pass").value;
+window.login = async function(){
 
-  if(user === "Geovane" && pass === "171nortesul"){
-    localStorage.setItem("logado","true");
-    window.location.href="admin.html";
-  }else{
-    alert("Login incorreto!");
+  let email = document.getElementById("user").value;
+  let senha = document.getElementById("pass").value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, senha);
+    window.location.href = "admin.html";
+  } catch (error) {
+    alert("Email ou senha incorretos!");
   }
+
 }
 
-window.logout = function(){
-  localStorage.removeItem("logado");
-  window.location.href="index.html";
+window.logout = async function(){
+  await signOut(auth);
+  window.location.href = "index.html";
 }
 
 window.onload = function(){
@@ -185,11 +194,13 @@ location.reload();
 
 if(window.location.pathname.includes("admin.html")){
 
-if(localStorage.getItem("logado") !== "true"){
-window.location.href="login.html";
-}
-
-carregarAdmin();
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+    } else {
+      carregarAdmin();
+    }
+  });
 
 }
 
