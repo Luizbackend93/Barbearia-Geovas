@@ -181,12 +181,10 @@ let mensagem = `Olá, meu nome é ${nome}. Quero agendar ${servico} no dia ${dat
 
 let telefone = "5531987930848";
 
-window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`);
-
 alert("Agendamento realizado!");
 
-location.reload();
-
+const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+window.location.href = url;
 }
 /* ============================= */
 /* ADMIN */
