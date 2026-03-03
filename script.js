@@ -12,7 +12,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-function scrollToAgendamento(){
+window.scrollToAgendamento = function(){
   document.getElementById("agendamento").scrollIntoView({behavior:"smooth"});
 }
 
