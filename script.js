@@ -279,7 +279,14 @@ let ag = doc.data();
 
 let li = document.createElement("li");
 
-li.innerHTML = `${ag.nome} - ${ag.servico} - ${ag.data} às ${ag.hora}`;
+let dataBR = ag.data;
+
+if(ag.data.includes("-")){
+  let partes = ag.data.split("-");
+  dataBR = `${partes[2]}/${partes[1]}/${partes[0]}`;
+}
+
+li.innerHTML = `${ag.nome} - ${ag.servico} - ${dataBR} às ${ag.hora}`;
 
 lista.appendChild(li);
 
