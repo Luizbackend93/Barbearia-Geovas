@@ -16,7 +16,7 @@ window.scrollToAgendamento = function(){
   document.getElementById("agendamento").scrollIntoView({behavior:"smooth"});
 }
 
-function login(){
+window.login = function(){
   let user = document.getElementById("user").value;
   let pass = document.getElementById("pass").value;
 
@@ -28,7 +28,7 @@ function login(){
   }
 }
 
-function logout(){
+window.logout = function(){
   localStorage.removeItem("logado");
   window.location.href="index.html";
 }
@@ -114,8 +114,8 @@ selectHora.appendChild(option);
 
 }
 
-async function agendar(){
-
+window.agendar = async function(){
+  
 let nome = document.getElementById("nome").value;
 let servico = document.getElementById("servico").value;
 let data = document.getElementById("data").value;
@@ -187,8 +187,8 @@ lista.innerHTML += `
 
 }
 
-async function excluir(id){
-
+window.excluir = async function(id){
+  
 await deleteDoc(doc(db, "agendamentos", id));
 
 alert("Agendamento excluído!");
@@ -205,7 +205,7 @@ carregarAdmin();
 
 let slideIndex = 0;
 
-function mudarSlide(direcao){
+window.mudarSlide = function(direcao){
 
 const slides = document.querySelector(".slides");
 const total = document.querySelectorAll(".slide").length;
