@@ -201,8 +201,6 @@ if(!lista) return;
 
 lista.innerHTML = "";
 
-import { query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 const q = query(collection(db, "agendamentos"), orderBy("data"));
 const querySnapshot = await getDocs(q);
 
