@@ -107,8 +107,8 @@ horarios = [
 
 }
 
-const q = query(collection(db, "agendamentos"), orderBy("data"), orderBy("hora"));
-const querySnapshot = await getDocs(q);
+const querySnapshot = await getDocs(collection(db, "agendamentos"));
+
 
 let agendamentos = [];
 
@@ -211,9 +211,7 @@ if(!lista) return;
 
 lista.innerHTML = "";
 
-const q = query(collection(db, "agendamentos"), orderBy("data"), orderBy("hora"));
-const querySnapshot = await getDocs(q);
-
+const querySnapshot = await getDocs(collection(db, "agendamentos"));
 querySnapshot.forEach((docItem) => {
 
 let ag = docItem.data();
@@ -281,8 +279,7 @@ if(!lista) return;
 
 lista.innerHTML = "";
 
-const q = query(collection(db, "agendamentos"), orderBy("data"), orderBy("hora"));
-const querySnapshot = await getDocs(q);
+const querySnapshot = await getDocs(collection(db, "agendamentos"));
   
 querySnapshot.forEach((doc) => {
 
