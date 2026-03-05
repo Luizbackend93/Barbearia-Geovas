@@ -210,7 +210,7 @@ if(!lista) return;
 
 lista.innerHTML = "";
 
-const q = query(collection(db, "agendamentos"), orderBy("data"));
+const q = query(collection(db, "agendamentos"), orderBy("data"), orderBy("hora"));
 const querySnapshot = await getDocs(q);
 
 querySnapshot.forEach((docItem) => {
