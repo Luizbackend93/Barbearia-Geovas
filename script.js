@@ -212,10 +212,29 @@ if(!lista) return;
 lista.innerHTML = "";
 
 const querySnapshot = await getDocs(collection(db, "agendamentos"));
-querySnapshot.forEach((docItem) => {
 
-let ag = docItem.data();
-let id = docItem.id;
+let agendamentos = [];
+
+querySnapshot.forEach((docItem) => {
+  let ag = docItem.data();
+  ag.id = docItem.id;
+  agendamentos.push(ag);
+});
+
+// ordenar por data e hora
+agendamentos.sort((a,b)=>{
+
+let da = a.data.split("/").reverse().join("-");
+let db = b.data.split("/").reverse().join("-");
+
+let dataA = new Date(da + " " + a.hora);
+let dataB = new Date(db + " " + b.hora);
+
+return dataA - dataB;
+
+});
+
+agendamentos.forEach((ag)=>{
 
 lista.innerHTML += `
 <div class="card">
@@ -223,7 +242,7 @@ lista.innerHTML += `
 <p><strong>Serviço:</strong> ${ag.servico}</p>
 <p><strong>Data:</strong> ${ag.data}</p>
 <p><strong>Hora:</strong> ${ag.hora}</p>
-<button onclick="excluir('${id}')">Excluir</button>
+<button onclick="excluir('${ag.id}')">Excluir</button>
 </div>
 `;
 
