@@ -280,10 +280,27 @@ if(!lista) return;
 lista.innerHTML = "";
 
 const querySnapshot = await getDocs(collection(db, "agendamentos"));
-  
-querySnapshot.forEach((doc) => {
 
-let ag = doc.data();
+let agendamentos = [];
+
+querySnapshot.forEach((doc) => {
+  agendamentos.push(doc.data());
+});
+
+// ordenar por data e hora
+agendamentos.sort((a,b)=>{
+
+let da = a.data.split("/").reverse().join("-");
+let db = b.data.split("/").reverse().join("-");
+
+let dataA = new Date(da + " " + a.hora);
+let dataB = new Date(db + " " + b.hora);
+
+return dataA - dataB;
+
+});
+
+agendamentos.forEach((ag)=>{
 
 let li = document.createElement("li");
 
