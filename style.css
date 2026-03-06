@@ -170,7 +170,6 @@ footer {
   cursor: pointer;
   border-radius: 50%;
 }
-}
 
 .prev{
   left: 10px;
@@ -178,4 +177,17 @@ footer {
 
 .next{
   right: 10px;
+}
+.whatsapp-fixo{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:white;
+font-size:28px;
+padding:15px;
+border-radius:50%;
+text-decoration:none;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+z-index:999;
 }
