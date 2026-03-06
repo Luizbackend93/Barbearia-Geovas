@@ -221,18 +221,30 @@ for (const docItem of querySnapshot.docs) {
   let ag = docItem.data();
   ag.id = docItem.id;
 
-  let partes = ag.data.split("/");
-  let dataAg = new Date(partes[2], partes[1]-1, partes[0]);
+let partes = ag.data.split("/");
 
-  if(dataAg < hoje){
+// cria data + hora do agendamento
+let horaParts = ag.hora.split(":");
 
-    await deleteDoc(doc(db, "agendamentos", ag.id));
+let dataHoraAg = new Date(
+  partes[2],
+  partes[1]-1,
+  partes[0],
+  horaParts[0],
+  horaParts[1]
+);
 
-  }else{
+let agora = new Date();
 
-    agendamentos.push(ag);
+if(dataHoraAg < agora){
 
-  }
+  await deleteDoc(doc(db, "agendamentos", ag.id));
+
+}else{
+
+  agendamentos.push(ag);
+
+}
 
 }
 
