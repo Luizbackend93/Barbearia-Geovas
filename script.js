@@ -211,13 +211,30 @@ lista.innerHTML = "";
 
 const querySnapshot = await getDocs(collection(db, "agendamentos"));
 
+let hoje = new Date();
+hoje.setHours(0,0,0,0);
+
 let agendamentos = [];
 
-querySnapshot.forEach((docItem) => {
+for (const docItem of querySnapshot.docs) {
+
   let ag = docItem.data();
   ag.id = docItem.id;
-  agendamentos.push(ag);
-});
+
+  let partes = ag.data.split("/");
+  let dataAg = new Date(partes[2], partes[1]-1, partes[0]);
+
+  if(dataAg < hoje){
+
+    await deleteDoc(doc(db, "agendamentos", ag.id));
+
+  }else{
+
+    agendamentos.push(ag);
+
+  }
+
+}
 
 // ordenar por data e hora
 agendamentos.sort((a,b)=>{
