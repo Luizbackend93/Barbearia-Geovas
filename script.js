@@ -61,8 +61,6 @@ if(dataInput){
 dataInput.addEventListener("change", gerarHorarios);
 }
 
-mostrarAgendamentos();
-
 };
 
 
@@ -283,57 +281,5 @@ if(slideIndex >= total){
 slideIndex = 0;
 }
 slides.style.transform = "translateX(" + (-slideIndex * 100) + "%)";
-
-}
-
-/* ============================= */
-/* MOSTRAR AGENDAMENTOS */
-/* ============================= */
-
-async function mostrarAgendamentos(){
-
-let lista = document.getElementById("lista");
-
-if(!lista) return;
-
-lista.innerHTML = "";
-
-const querySnapshot = await getDocs(collection(db, "agendamentos"));
-
-let agendamentos = [];
-
-querySnapshot.forEach((doc) => {
-  agendamentos.push(doc.data());
-});
-
-// ordenar por data e hora
-agendamentos.sort((a,b)=>{
-
-let da = a.data.split("/").reverse().join("-");
-let db = b.data.split("/").reverse().join("-");
-
-let dataA = new Date(da + " " + a.hora);
-let dataB = new Date(db + " " + b.hora);
-
-return dataA - dataB;
-
-});
-
-agendamentos.forEach((ag)=>{
-
-let li = document.createElement("li");
-
-let dataBR = ag.data;
-
-if(ag.data.includes("-")){
-  let partes = ag.data.split("-");
-  dataBR = `${partes[2]}/${partes[1]}/${partes[0]}`;
-}
-
-li.innerHTML = `${ag.nome} - ${ag.servico} - ${dataBR} às ${ag.hora}`;
-
-lista.appendChild(li);
-
-});
 
 }
