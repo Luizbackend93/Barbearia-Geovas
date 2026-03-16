@@ -55,11 +55,15 @@ window.logout = async function(){
 window.onload = function(){
 
 let dataInput = document.getElementById("data");
-  
 
 if(dataInput){
 dataInput.addEventListener("change", gerarHorarios);
 }
+
+// verificar se barbearia está aberta
+verificarStatus();
+
+setInterval(verificarStatus, 60000);
 
 };
 
@@ -311,7 +315,54 @@ alert("Agendamento excluído!");
 carregarAdmin();
 
 }
+function verificarStatus(){
 
+let agora = new Date();
+
+let dia = agora.getDay();
+let hora = agora.getHours();
+let minuto = agora.getMinutes();
+
+let horaAtual = hora + minuto/60;
+
+let status = document.getElementById("statusBarbearia");
+
+if(!status) return;
+
+// Domingo
+if(dia === 0){
+status.innerText = "🔴 Fechado hoje";
+status.style.color = "red";
+return;
+}
+
+// Segunda a Sexta
+if(dia >= 1 && dia <= 5){
+
+if(horaAtual >= 9 && horaAtual < 18){
+status.innerText = "🟢 Aberto agora";
+status.style.color = "#2ecc71";
+}else{
+status.innerText = "🔴 Fechado — abre às 09:00";
+status.style.color = "red";
+}
+
+}
+
+// Sábado
+if(dia === 6){
+
+if(horaAtual >= 9 && horaAtual < 16.5){
+status.innerText = "🟢 Aberto agora";
+status.style.color = "#2ecc71";
+}else{
+status.innerText = "🔴 Fechado — abre às 09:00";
+status.style.color = "red";
+}
+
+}
+
+}
 
 
 /* ============================= */
