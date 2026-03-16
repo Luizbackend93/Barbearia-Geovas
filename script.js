@@ -8,7 +8,8 @@ import {
   deleteDoc,
   doc,
   query,
-  orderBy
+  orderBy,
+  where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
   getAuth,
@@ -116,7 +117,12 @@ horarios = [
 ];
 
 }
-const querySnapshot = await getDocs(collection(db, "agendamentos"));
+const q = query(
+collection(db, "agendamentos"),
+where("data", "==", dataFormatada)
+);
+
+const querySnapshot = await getDocs(q);
 
 
 let agendamentos = [];
@@ -204,6 +210,8 @@ await addDoc(collection(db, "agendamentos"), {
   data: dataFormatada,
   hora: hora
 });
+
+await gerarHorarios();
 
 let mensagem = `Olá, meu nome é ${nome}. Quero agendar ${servico} no dia ${dataFormatada} às ${hora}.`;
 
