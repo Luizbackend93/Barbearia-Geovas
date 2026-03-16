@@ -191,3 +191,31 @@ text-decoration:none;
 box-shadow:0 4px 10px rgba(0,0,0,0.3);
 z-index:999;
 }
+/* HORÁRIO AO LADO DAS FOTOS */
+
+.trabalhos-container{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:60px;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.horario-funcionamento{
+background:#111;
+padding:25px;
+border-radius:12px;
+border:1px solid #d4af37;
+min-width:220px;
+}
+
+.horario-funcionamento h3{
+color:#d4af37;
+margin-bottom:15px;
+}
+
+.horario-funcionamento p{
+margin:5px 0;
+}
+
