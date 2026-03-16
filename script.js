@@ -88,7 +88,10 @@ return;
 
 if(dia === 6){
 
+// SÁBADO
 horarios = [
+"09:00",
+"10:30",
 "12:00",
 "13:30",
 "15:00",
@@ -97,14 +100,18 @@ horarios = [
 
 }else{
 
+// SEGUNDA A SEXTA
 horarios = [
-"15:30",
-"17:00",
-"18:30"
+"09:00",
+"10:30",
+"12:00",
+"13:30",
+"15:00",
+"16:30",
+"18:00"
 ];
 
 }
-
 const querySnapshot = await getDocs(collection(db, "agendamentos"));
 
 
