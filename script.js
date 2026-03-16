@@ -141,6 +141,24 @@ selectHora.appendChild(option);
 }
 
 });
+// CONTADOR DE HORÁRIOS LIVRES
+let livres = horarios.filter(h => 
+!agendamentos.some(a => a.data === dataFormatada && a.hora === h)
+);
+
+// Próximo horário disponível
+let proximo = livres.length > 0 ? livres[0] : null;
+
+let proximoHorario = document.getElementById("proximoHorario");
+let horariosRestantes = document.getElementById("horariosRestantes");
+
+if(proximo){
+proximoHorario.innerText = "⏰ Próximo horário disponível: " + proximo;
+horariosRestantes.innerText = "📊 Horários livres hoje: " + livres.length;
+}else{
+proximoHorario.innerText = "❌ Não há horários disponíveis hoje";
+horariosRestantes.innerText = "";
+}
 
 }
 
