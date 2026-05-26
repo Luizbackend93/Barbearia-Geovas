@@ -112,69 +112,80 @@ window.addEventListener("load", function () {
 });
 
 /* ===================================== */
-/* GERAR HORÁRIOS PREMIUM */
+/* GERAR HORÁRIOS PREMIUM (DINÂMICO) */
 /* ===================================== */
 async function gerarHorarios() {
   let data = document.getElementById("data").value;
   if (!data) return;
 
-  let partesFormat = data.split("-");
-  let dataFormatada = `${partesFormat[2]}/${partesFormat[1]}/${partesFormat[0]}`;
+  let partes = data.split("-");
+  let dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
 
-  let dataObj = new Date(
-    partesFormat[0],
-    partesFormat[1] - 1,
-    partesFormat[2]
-  );
-
+  // Correção de fuso horário: passando ano, mês (0-11) e dia exatos
+  let dataObj = new Date(partes[0], partes[1] - 1, partes[2]);
   let dia = dataObj.getDay();
+
+  let inicio = "";
+  let fim = "";
+
+  switch (dia) {
+    case 0: // Domingo
+      Swal.fire({
+        icon: "warning",
+        title: "Barbearia fechada aos domingos",
+        confirmButtonColor: "#d4af37",
+        background: "#111",
+        color: "#fff"
+      });
+      document.getElementById("hora").innerHTML = '<option value="">Fechado</option>';
+      return;
+
+    case 1: // Segunda-feira
+      Swal.fire({
+        icon: "warning",
+        title: "Barbearia fechada às segundas-feiras",
+        confirmButtonColor: "#d4af37",
+        background: "#111",
+        color: "#fff"
+      });
+      document.getElementById("hora").innerHTML = '<option value="">Fechado</option>';
+      return;
+
+    case 2: // Terça
+    case 3: // Quarta
+      inicio = "09:00";
+      fim = "18:00";
+      break;
+
+    case 4: // Quinta
+      inicio = "09:00";
+      fim = "19:30";
+      break;
+
+    case 5: // Sexta
+      inicio = "08:00";
+      fim = "20:00";
+      break;
+
+    case 6: // Sábado
+      inicio = "07:00";
+      fim = "19:00";
+      break;
+  }
+
   let horarios = [];
+  let atual = new Date(`2000-01-01 ${inicio}`);
+  let limite = new Date(`2000-01-01 ${fim}`);
 
-  /* SEGUNDA */
-  if (dia === 1) {
-    Swal.fire({
-      icon: "warning",
-      title: "Fechado na Segunda-feira",
-      confirmButtonColor: "#d4af37",
-      background: "#111",
-      color: "#fff"
-    });
-    return;
+  // Gera os horários de 30 em 30 minutos, parando ANTES do horário de fechar
+  while (atual < limite) {
+    let h = String(atual.getHours()).padStart(2, "0");
+    let m = String(atual.getMinutes()).padStart(2, "0");
+    horarios.push(`${h}:${m}`);
+    atual.setMinutes(atual.getMinutes() + 30);
   }
 
-  /* DOMINGO */
-  if (dia === 0) {
-    Swal.fire({
-      icon: "warning",
-      title: "Fechado no Domingo",
-      confirmButtonColor: "#d4af37",
-      background: "#111",
-      color: "#fff"
-    });
-    return;
-  }
-
-  /* TERÇA E QUARTA */
-  if (dia === 2 || dia === 3) {
-    horarios = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
-  }
-
-  /* QUINTA */
-  if (dia === 4) {
-    horarios = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:30"];
-  }
-
-  /* SEXTA */
-  if (dia === 5) {
-    horarios = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
-  }
-
-  /* SÁBADO */
-  if (dia === 6) {
-    horarios = ["07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
-  }
-
-  /* BUSCAR AGENDAMENTOS */
+  /* BUSCAR AGENDAMENTOS NO FIREBASE */
   const q = query(
     collection(db, "agendamentos"),
     where("data", "==", dataFormatada)
@@ -190,13 +201,13 @@ async function gerarHorarios() {
   let selectHora = document.getElementById("hora");
   selectHora.innerHTML = '<option value="">Selecione o horário</option>';
 
-  horarios.forEach(h => {
-    let ocupado = agendados.some(a => a.hora === h);
+  horarios.forEach(horario => {
+    let ocupado = agendados.some(item => item.hora === horario);
 
     if (!ocupado) {
       let option = document.createElement("option");
-      option.value = h;
-      option.textContent = h;
+      option.value = horario;
+      option.textContent = horario;
       selectHora.appendChild(option);
     }
   });
@@ -234,9 +245,7 @@ window.agendar = async function () {
   let partes = dataInput.split("-");
   let dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
 
-  /* ===================================== */
   /* VERIFICAR DUPLICIDADE */
-  /* ===================================== */
   const verificar = query(
     collection(db, "agendamentos"),
     where("data", "==", dataFormatada),
@@ -260,9 +269,7 @@ window.agendar = async function () {
     return;
   }
 
-  /* ===================================== */
   /* SALVAR AGENDAMENTO */
-  /* ===================================== */
   await addDoc(collection(db, "agendamentos"), {
     nome,
     servico,
