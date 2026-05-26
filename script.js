@@ -31,16 +31,13 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
-
 const auth = getAuth(app);
 
 /* ===================================== */
 /* SCROLL */
 /* ===================================== */
 window.scrollToAgendamento = function () {
-
   document
     .getElementById("agendamento")
     .scrollIntoView({
@@ -52,15 +49,10 @@ window.scrollToAgendamento = function () {
 /* LOGIN */
 /* ===================================== */
 window.login = async function () {
-
-  let email =
-    document.getElementById("user").value;
-
-  let senha =
-    document.getElementById("pass").value;
+  let email = document.getElementById("user").value;
+  let senha = document.getElementById("pass").value;
 
   if (!email || !senha) {
-
     Swal.fire({
       icon: "warning",
       title: "Preencha todos os campos",
@@ -68,17 +60,11 @@ window.login = async function () {
       background: "#111",
       color: "#fff"
     });
-
     return;
   }
 
   try {
-
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      senha
-    );
+    await signInWithEmailAndPassword(auth, email, senha);
 
     Swal.fire({
       icon: "success",
@@ -88,14 +74,10 @@ window.login = async function () {
     });
 
     setTimeout(() => {
-
-      window.location.href =
-        "admin.html";
-
+      window.location.href = "admin.html";
     }, 1500);
 
   } catch (error) {
-
     Swal.fire({
       icon: "error",
       title: "Login inválido",
@@ -111,52 +93,33 @@ window.login = async function () {
 /* LOGOUT */
 /* ===================================== */
 window.logout = async function () {
-
   await signOut(auth);
-
-  window.location.href =
-    "index.html";
+  window.location.href = "index.html";
 };
 
 /* ===================================== */
 /* ONLOAD */
 /* ===================================== */
-window.onload = function () {
-
-  let dataInput =
-    document.getElementById("data");
+window.addEventListener("load", function () {
+  let dataInput = document.getElementById("data");
 
   if (dataInput) {
-
-    dataInput.addEventListener(
-      "change",
-      gerarHorarios
-    );
+    dataInput.addEventListener("change", gerarHorarios);
   }
 
   verificarStatus();
-
-  setInterval(
-    verificarStatus,
-    60000
-  );
-};
+  setInterval(verificarStatus, 60000);
+});
 
 /* ===================================== */
 /* GERAR HORÁRIOS PREMIUM */
 /* ===================================== */
 async function gerarHorarios() {
-
-  let data =
-    document.getElementById("data").value;
-
+  let data = document.getElementById("data").value;
   if (!data) return;
 
-  let partesFormat =
-    data.split("-");
-
-  let dataFormatada =
-    `${partesFormat[2]}/${partesFormat[1]}/${partesFormat[0]}`;
+  let partesFormat = data.split("-");
+  let dataFormatada = `${partesFormat[2]}/${partesFormat[1]}/${partesFormat[0]}`;
 
   let dataObj = new Date(
     partesFormat[0],
@@ -164,14 +127,11 @@ async function gerarHorarios() {
     partesFormat[2]
   );
 
-  let dia =
-    dataObj.getDay();
-
+  let dia = dataObj.getDay();
   let horarios = [];
 
   /* SEGUNDA */
   if (dia === 1) {
-
     Swal.fire({
       icon: "warning",
       title: "Fechado na Segunda-feira",
@@ -179,13 +139,11 @@ async function gerarHorarios() {
       background: "#111",
       color: "#fff"
     });
-
     return;
   }
 
   /* DOMINGO */
   if (dia === 0) {
-
     Swal.fire({
       icon: "warning",
       title: "Fechado no Domingo",
@@ -193,83 +151,27 @@ async function gerarHorarios() {
       background: "#111",
       color: "#fff"
     });
-
     return;
   }
 
   /* TERÇA E QUARTA */
   if (dia === 2 || dia === 3) {
-
-    horarios = [
-      "09:00",
-      "10:00",
-      "11:00",
-      "12:00",
-      "13:00",
-      "14:00",
-      "15:00",
-      "16:00",
-      "17:00",
-      "18:00"
-    ];
+    horarios = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
   }
 
   /* QUINTA */
   if (dia === 4) {
-
-    horarios = [
-      "09:00",
-      "10:00",
-      "11:00",
-      "12:00",
-      "13:00",
-      "14:00",
-      "15:00",
-      "16:00",
-      "17:00",
-      "18:00",
-      "19:30"
-    ];
+    horarios = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:30"];
   }
 
   /* SEXTA */
   if (dia === 5) {
-
-    horarios = [
-      "08:00",
-      "09:00",
-      "10:00",
-      "11:00",
-      "12:00",
-      "13:00",
-      "14:00",
-      "15:00",
-      "16:00",
-      "17:00",
-      "18:00",
-      "19:00",
-      "20:00"
-    ];
+    horarios = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
   }
 
   /* SÁBADO */
   if (dia === 6) {
-
-    horarios = [
-      "07:00",
-      "08:00",
-      "09:00",
-      "10:00",
-      "11:00",
-      "12:00",
-      "13:00",
-      "14:00",
-      "15:00",
-      "16:00",
-      "17:00",
-      "18:00",
-      "19:00"
-    ];
+    horarios = ["07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
   }
 
   /* BUSCAR AGENDAMENTOS */
@@ -278,37 +180,23 @@ async function gerarHorarios() {
     where("data", "==", dataFormatada)
   );
 
-  const snapshot =
-    await getDocs(q);
-
+  const snapshot = await getDocs(q);
   let agendados = [];
 
   snapshot.forEach(doc => {
-
     agendados.push(doc.data());
-
   });
 
-  let selectHora =
-    document.getElementById("hora");
-
-  selectHora.innerHTML =
-    '<option value="">Selecione o horário</option>';
+  let selectHora = document.getElementById("hora");
+  selectHora.innerHTML = '<option value="">Selecione o horário</option>';
 
   horarios.forEach(h => {
-
-    let ocupado =
-      agendados.some(a => a.hora === h);
+    let ocupado = agendados.some(a => a.hora === h);
 
     if (!ocupado) {
-
-      let option =
-        document.createElement("option");
-
+      let option = document.createElement("option");
       option.value = h;
-
       option.textContent = h;
-
       selectHora.appendChild(option);
     }
   });
@@ -318,41 +206,16 @@ async function gerarHorarios() {
 /* AGENDAR */
 /* ===================================== */
 window.agendar = async function () {
-
-  let botao =
-    document.querySelector(
-      ".agendamento button"
-    );
-
-  botao.innerHTML =
-    "Agendando...";
-
+  let botao = document.querySelector(".agendamento button");
+  botao.innerHTML = "Agendando...";
   botao.disabled = true;
 
-  let nome =
-    document.getElementById("nome")
-    .value
-    .trim();
+  let nome = document.getElementById("nome").value.trim();
+  let servicoRaw = document.getElementById("servico").value;
+  let dataInput = document.getElementById("data").value;
+  let hora = document.getElementById("hora").value;
 
-  let servicoRaw =
-    document.getElementById("servico")
-    .value;
-
-  let dataInput =
-    document.getElementById("data")
-    .value;
-
-  let hora =
-    document.getElementById("hora")
-    .value;
-
-  if (
-    !nome ||
-    !dataInput ||
-    !hora ||
-    !servicoRaw
-  ) {
-
+  if (!nome || !dataInput || !hora || !servicoRaw) {
     Swal.fire({
       icon: "warning",
       title: "Preencha todos os campos",
@@ -361,25 +224,15 @@ window.agendar = async function () {
       color: "#fff"
     });
 
-    botao.innerHTML =
-      "Confirmar Agendamento";
-
+    botao.innerHTML = "Confirmar Agendamento";
     botao.disabled = false;
-
     return;
   }
 
-  let [servicoNome, servicoPreco] =
-    servicoRaw.split("|");
-
-  let servico =
-    `${servicoNome} - R$${servicoPreco}`;
-
-  let partes =
-    dataInput.split("-");
-
-  let dataFormatada =
-    `${partes[2]}/${partes[1]}/${partes[0]}`;
+  let [servicoNome, servicoPreco] = servicoRaw.split("|");
+  let servico = `${servicoNome} - R$${servicoPreco}`;
+  let partes = dataInput.split("-");
+  let dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
 
   /* ===================================== */
   /* VERIFICAR DUPLICIDADE */
@@ -390,11 +243,9 @@ window.agendar = async function () {
     where("hora", "==", hora)
   );
 
-  const existe =
-    await getDocs(verificar);
+  const existe = await getDocs(verificar);
 
   if (!existe.empty) {
-
     Swal.fire({
       icon: "error",
       title: "Horário já agendado",
@@ -404,27 +255,21 @@ window.agendar = async function () {
       color: "#fff"
     });
 
-    botao.innerHTML =
-      "Confirmar Agendamento";
-
+    botao.innerHTML = "Confirmar Agendamento";
     botao.disabled = false;
-
     return;
   }
 
   /* ===================================== */
   /* SALVAR AGENDAMENTO */
   /* ===================================== */
-  await addDoc(
-    collection(db, "agendamentos"),
-    {
-      nome,
-      servico,
-      preco: servicoPreco,
-      data: dataFormatada,
-      hora
-    }
-  );
+  await addDoc(collection(db, "agendamentos"), {
+    nome,
+    servico,
+    preco: servicoPreco,
+    data: dataFormatada,
+    hora
+  });
 
   Swal.fire({
     icon: "success",
@@ -434,125 +279,69 @@ window.agendar = async function () {
     color: "#fff"
   });
 
-  let mensagem =
-    `Olá, meu nome é ${nome}. Quero ${servicoNome} por R$${servicoPreco} no dia ${dataFormatada} às ${hora}.`;
+  let mensagem = `Olá, meu nome é ${nome}. Quero ${servicoNome} por R$${servicoPreco} no dia ${dataFormatada} às ${hora}.`;
+  let url = `https://wa.me/5531987930848?text=${encodeURIComponent(mensagem)}`;
 
-  let url =
-    `https://wa.me/5531987930848?text=${encodeURIComponent(mensagem)}`;
-
-  botao.innerHTML =
-    "Confirmar Agendamento";
-
+  botao.innerHTML = "Confirmar Agendamento";
   botao.disabled = false;
 
   setTimeout(() => {
-
     window.location.href = url;
-
   }, 2000);
 };
 
 /* ===================================== */
 /* ADMIN LOGIN CHECK */
 /* ===================================== */
-if (
-  window.location.pathname.includes(
-    "admin.html"
-  )
-) {
-
-  onAuthStateChanged(
-    auth,
-    (user) => {
-
-      if (!user) {
-
-        window.location.href =
-          "login.html";
-
-      } else {
-
-        carregarAdmin();
-      }
+if (window.location.pathname.includes("admin.html")) {
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+    } else {
+      carregarAdmin();
     }
-  );
+  });
 }
 
 /* ===================================== */
 /* CARREGAR ADMIN */
 /* ===================================== */
 async function carregarAdmin() {
-
-  let lista =
-    document.getElementById(
-      "listaAgendamentos"
-    );
-
+  let lista = document.getElementById("listaAgendamentos");
   if (!lista) return;
 
   lista.innerHTML = "";
 
-  const snapshot =
-    await getDocs(
-      collection(db, "agendamentos")
-    );
-
+  const snapshot = await getDocs(collection(db, "agendamentos"));
   let agendamentos = [];
-
   let faturamento = 0;
 
   snapshot.forEach(docItem => {
-
-    let ag =
-      docItem.data();
-
-    ag.id =
-      docItem.id;
-
+    let ag = docItem.data();
+    ag.id = docItem.id;
     agendamentos.push(ag);
 
     if (ag.preco) {
-
-      faturamento +=
-        Number(ag.preco);
+      faturamento += Number(ag.preco);
     }
   });
 
   agendamentos.forEach(ag => {
-
     lista.innerHTML += `
       <div class="agendamento-item">
-
         <p><strong>Cliente:</strong> ${ag.nome}</p>
-
         <p><strong>Serviço:</strong> ${ag.servico}</p>
-
         <p><strong>Data:</strong> ${ag.data}</p>
-
         <p><strong>Hora:</strong> ${ag.hora}</p>
-
         <p><strong>Preço:</strong> R$ ${ag.preco}</p>
-
-        <button
-          class="btn-excluir"
-          onclick="excluir('${ag.id}')"
-        >
-          Excluir
-        </button>
-
+        <button class="btn-excluir" onclick="excluir('${ag.id}')">Excluir</button>
       </div>
     `;
   });
 
-  let faturamentoHoje =
-    document.getElementById(
-      "faturamentoHoje"
-    );
-
+  let faturamentoHoje = document.getElementById("faturamentoHoje");
   if (faturamentoHoje) {
-
-    faturamentoHoje.innerText =
-      "R$ " + faturamento;
+    faturamentoHoje.innerText = "R$ " + faturamento;
   }
 }
 
@@ -560,11 +349,7 @@ async function carregarAdmin() {
 /* EXCLUIR */
 /* ===================================== */
 window.excluir = async function (id) {
-
-  await deleteDoc(
-    doc(db, "agendamentos", id)
-  );
-
+  await deleteDoc(doc(db, "agendamentos", id));
   carregarAdmin();
 };
 
@@ -572,105 +357,57 @@ window.excluir = async function (id) {
 /* STATUS BARBEARIA PREMIUM */
 /* ===================================== */
 function verificarStatus() {
+  let agora = new Date();
+  let dia = agora.getDay();
+  let horaAtual = agora.getHours() + (agora.getMinutes() / 60);
 
-  let agora =
-    new Date();
-
-  let dia =
-    agora.getDay();
-
-  let horaAtual =
-    agora.getHours() +
-    (agora.getMinutes() / 60);
-
-  let status =
-    document.getElementById(
-      "statusBarbearia"
-    );
-
+  let status = document.getElementById("statusBarbearia");
   if (!status) return;
 
   let aberto = false;
 
   /* SEGUNDA */
   if (dia === 1) {
-
     aberto = false;
   }
-
   /* DOMINGO */
   else if (dia === 0) {
-
     aberto = false;
   }
-
   /* TERÇA E QUARTA */
-  else if (
-    (dia === 2 || dia === 3) &&
-    horaAtual >= 9 &&
-    horaAtual < 18
-  ) {
-
+  else if ((dia === 2 || dia === 3) && horaAtual >= 9 && horaAtual < 18) {
     aberto = true;
   }
-
   /* QUINTA */
-  else if (
-    dia === 4 &&
-    horaAtual >= 9 &&
-    horaAtual < 19.5
-  ) {
-
+  else if (dia === 4 && horaAtual >= 9 && horaAtual < 19.5) {
     aberto = true;
   }
-
   /* SEXTA */
-  else if (
-    dia === 5 &&
-    horaAtual >= 8 &&
-    horaAtual < 20
-  ) {
-
+  else if (dia === 5 && horaAtual >= 8 && horaAtual < 20) {
     aberto = true;
   }
-
   /* SÁBADO */
-  else if (
-    dia === 6 &&
-    horaAtual >= 7 &&
-    horaAtual < 19
-  ) {
-
+  else if (dia === 6 && horaAtual >= 7 && horaAtual < 19) {
     aberto = true;
   }
 
   if (aberto) {
-
-    status.innerHTML =
-      "🟢 Aberto agora";
-
-    status.style.color =
-      "#2ecc71";
-
+    status.innerHTML = "🟢 Aberto agora";
+    status.style.color = "#2ecc71";
   } else {
-
-    status.innerHTML =
-      "🔴 Fechado no momento";
-
-    status.style.color =
-      "#ff4d4d";
+    status.innerHTML = "🔴 Fechado no momento";
+    status.style.color = "#ff4d4d";
   }
 }
+
 /* ===================================== */
 /* CARROSSEL PREMIUM */
 /* ===================================== */
-
 let slideAtual = 0;
-
-const slides =
-document.querySelectorAll(".slide");
+let slides = [];
 
 function mostrarSlide(index) {
+  if (!slides.length) return;
 
   if (index >= slides.length) {
     slideAtual = 0;
@@ -681,15 +418,14 @@ function mostrarSlide(index) {
   }
 
   slides.forEach((slide) => {
-
     slide.style.display = "none";
-
   });
 
   slides[slideAtual].style.display = "block";
 }
 
 window.mudarSlide = function (direcao) {
+  if (!slides.length) return;
 
   slideAtual += direcao;
 
@@ -704,23 +440,20 @@ window.mudarSlide = function (direcao) {
   mostrarSlide(slideAtual);
 };
 
-/* INICIAR */
+document.addEventListener("DOMContentLoaded", () => {
+  slides = document.querySelectorAll(".slide");
 
-if (slides.length > 0) {
-
-  mostrarSlide(slideAtual);
-
-  /* AUTO SLIDE */
-
-  setInterval(() => {
-
-    slideAtual++;
-
-    if (slideAtual >= slides.length) {
-      slideAtual = 0;
-    }
-
+  if (slides.length > 0) {
     mostrarSlide(slideAtual);
 
-  }, 4000);
-}
+    setInterval(() => {
+      slideAtual++;
+
+      if (slideAtual >= slides.length) {
+        slideAtual = 0;
+      }
+
+      mostrarSlide(slideAtual);
+    }, 4000);
+  }
+});
