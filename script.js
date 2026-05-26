@@ -112,7 +112,7 @@ window.addEventListener("load", function () {
 });
 
 /* ===================================== */
-/* GERAR HORÁRIOS PREMIUM (DINÂMICO) */
+/* GERAR HORÁRIOS PREMIUM (1 EM 1 HORA) */
 /* ===================================== */
 async function gerarHorarios() {
   let data = document.getElementById("data").value;
@@ -121,7 +121,6 @@ async function gerarHorarios() {
   let partes = data.split("-");
   let dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
 
-  // Criação da data selecionada respeitando o fuso local
   let dataObj = new Date(partes[0], partes[1] - 1, partes[2]);
   let dia = dataObj.getDay();
 
@@ -159,7 +158,7 @@ async function gerarHorarios() {
 
     case 4: // Quinta
       inicio = "09:00";
-      fim = "19:30";
+      fim = "19:30"; // O loop vai parar às 19:00, que é a última hora cheia útil
       break;
 
     case 5: // Sexta
@@ -177,17 +176,16 @@ async function gerarHorarios() {
   let atual = new Date(`2000-01-01 ${inicio}`);
   let limite = new Date(`2000-01-01 ${fim}`);
 
+  // MUDANÇA AQUI: Loop agora pula de 60 em 60 minutos (1 hora)
   while (atual < limite) {
     let h = String(atual.getHours()).padStart(2, "0");
     let m = String(atual.getMinutes()).padStart(2, "0");
     horarios.push(`${h}:${m}`);
-    atual.setMinutes(atual.getMinutes() + 30);
+    atual.setMinutes(atual.getMinutes() + 60); 
   }
 
-  /* VERIFICAÇÃO DE HORÁRIOS PASSADOS PARA O DIA DE HOJE */
+  /* VERIFICAÇÃO DE HORÁRIOS PASSADOS */
   const hoje = new Date();
-  
-  // Formata a data de hoje para "AAAA-MM-DD" no fuso local para comparar com o input
   let anoHoje = hoje.getFullYear();
   let mesHoje = String(hoje.getMonth() + 1).padStart(2, "0");
   let diaHoje = String(hoje.getDate()).padStart(2, "0");
@@ -214,14 +212,13 @@ async function gerarHorarios() {
   let temHorarioDisponivel = false;
 
   horarios.forEach(horario => {
-    // Se for o dia de hoje, esconde o que já passou
     if (mesmaData) {
       let [h, m] = horario.split(":");
       let horarioOpcaoValor = Number(h) + Number(m) / 60;
       let horarioAtualValor = hoje.getHours() + hoje.getMinutes() / 60;
 
       if (horarioOpcaoValor <= horarioAtualValor) {
-        return; // Pula este horário porque já passou
+        return; 
       }
     }
 
@@ -236,7 +233,6 @@ async function gerarHorarios() {
     }
   });
 
-  // Se for hoje e não sobrar nenhum horário pro resto do dia
   if (mesmaData && !temHorarioDisponivel) {
     selectHora.innerHTML = '<option value="">Nenhum horário disponível para hoje</option>';
   }
@@ -459,3 +455,37 @@ function mostrarSlide(index) {
 
   slides[slideAtual].style.display = "block";
 }
+
+window.mudarSlide = function (direcao) {
+  if (!slides.length) return;
+
+  slideAtual += direcao;
+
+  if (slideAtual >= slides.length) {
+    slideAtual = 0;
+  }
+
+  if (slideAtual < 0) {
+    slideAtual = slides.length - 1;
+  }
+
+  mostrarSlide(slideAtual);
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  slides = document.querySelectorAll(".slide");
+
+  if (slides.length > 0) {
+    mostrarSlide(slideAtual);
+
+    setInterval(() => {
+      slideAtual++;
+
+      if (slideAtual >= slides.length) {
+        slideAtual = 0;
+      }
+
+      mostrarSlide(slideAtual);
+    }, 4000);
+  }
+});
