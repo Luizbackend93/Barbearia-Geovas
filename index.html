@@ -2,420 +2,209 @@
 <html lang="pt-br">
 
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Barbearia Geovas</title>
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Geovas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
 
-<!-- HEADER -->
-
-<header>
-
-<div class="logo-area">
-
-<img src="img/logo.png.jpeg" class="logo">
-
-<h1>Barbearia Geovas</h1>
-
-</div>
-
-<a href="login.html" class="admin-link">
-
-<i class="fa-regular fa-user"></i>
-Área Admin
-
-</a>
-
-</header>
-
-<!-- HERO -->
-
-<section class="hero">
-
-<div class="hero-content">
-
-<h2>Estilo, Precisão e Elegância</h2>
-
-<p>
-Transformando visual e autoestima
-com cortes modernos e atendimento profissional.
-</p>
-
-<p id="statusBarbearia"></p>
-
-<div class="hero-buttons">
-
-<button
-class="btn-agendar"
-onclick="scrollToAgendamento()">
-
-<i class="fa-regular fa-calendar"></i>
-Agendar Agora
-
-</button>
-
-<a
-href="https://wa.me/5531987930848"
-target="_blank"
-class="btn-whats">
-
-<i class="fa-brands fa-whatsapp"></i>
-WhatsApp
-
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- TRABALHOS -->
-
-<section id="trabalhos">
-
-<h2 class="titulo-section">
-🔥 Meus Trabalhos
-</h2>
-
-<div class="trabalhos-container">
-
-<!-- CARROSSEL -->
-
-<div class="carrossel">
-
-<button class="prev"
-onclick="mudarSlide(-1)">
-❮
-</button>
-
-<div class="slides">
-
-<img src="img/corte1.jpg.jpeg" class="slide">
-<img src="img/corte2.jpg.jpeg" class="slide">
-<img src="img/corte3.jpg.jpeg" class="slide">
-<img src="img/corte4.jpg.jpeg" class="slide">
-<img src="img/corte5.jpg.jpeg" class="slide">
-<img src="img/corte6.jpg.jpeg" class="slide">
-
-</div>
-
-<button class="next"
-onclick="mudarSlide(1)">
-❯
-</button>
-
-</div>
-
-<!-- FUNCIONAMENTO PREMIUM -->
-
-<section class="funcionamento-premium">
-
-<div class="funcionamento-card">
-
-<div class="funcionamento-topo">
-
-<div class="icone-funcionamento">
-⏰
-</div>
-
-<div>
-
-<h2>Funcionamento Oficial</h2>
-
-<p>
-Atendimento com horário marcado
-</p>
-
-</div>
-
-</div>
-
-<div class="horarios">
-
-<div class="linha">
-<span>Segunda-feira</span>
-<strong class="fechado">FECHADO</strong>
-</div>
-
-<div class="linha">
-<span>Terça-feira</span>
-<strong>09h às 18h</strong>
-</div>
-
-<div class="linha">
-<span>Quarta-feira</span>
-<strong>09h às 18h</strong>
-</div>
-
-<div class="linha">
-<span>Quinta-feira</span>
-<strong>09h às 19h30</strong>
-</div>
-
-<div class="linha">
-<span>Sexta-feira</span>
-<strong>08h às 20h</strong>
-</div>
-
-<div class="linha">
-<span>Sábado</span>
-<strong>07h às 19h</strong>
-</div>
-
-<div class="linha">
-<span>Domingo</span>
-<strong class="fechado">FECHADO</strong>
-</div>
-
-</div>
-
-<div class="info-extra">
-
-Horários especiais podem ser ajustados
-em datas comemorativas e feriados.
-
-</div>
-
-<button onclick="scrollToAgendamento()">
-
-AGENDAR AGORA
-
-</button>
-
-</div>
-
-</section>
-
-</div>
-
-</section>
-
-<!-- AGENDAMENTO -->
-
-<section class="agendamento" id="agendamento">
-
-<h2>Agendar Horário</h2>
-
-<input
-type="text"
-id="nome"
-placeholder="Seu Nome">
-
-<!-- SELECT -->
-
-<select id="servico">
-
-<optgroup label="✂ SERVIÇOS">
-
-<option value="Corte / Disfarçado|30">
-Corte / Disfarçado — R$30
-</option>
-
-<option value="Barba|25">
-Barba — R$25
-</option>
-
-<option value="Sobrancelha|5">
-Sobrancelha — R$5
-</option>
-
-<option value="Pezinho|10">
-Pezinho — R$10
-</option>
-
-<option value="Corte na Tesoura|35">
-Corte na Tesoura — R$35
-</option>
-
-<option value="Hidratação|20">
-Hidratação — R$20
-</option>
-
-<option value="Relaxamento|50">
-Relaxamento — R$50
-</option>
-
-<option value="Lavagem simples|10">
-Lavagem simples — R$10
-</option>
-
-<option value="Lavagem + finalização|20">
-Lavagem + finalização — R$20
-</option>
-
-<option value="Selagem|90">
-Selagem — R$90
-</option>
-
-<option value="Pigmentação + Corte|50">
-Pigmentação + Corte — R$50
-</option>
-
-<option value="Luzes|80">
-Luzes — R$80
-</option>
-
-<option value="Platinado|130">
-Platinado — R$130
-</option>
-
-<option value="Risco Simples|5">
-Risco Simples — R$5
-</option>
-
-<option value="Design / Freestyle|10">
-Design / Freestyle — R$10
-</option>
-
-</optgroup>
-
-<optgroup label="💎 COMBOS">
-
-<option value="Corte + Barba|50">
-Corte + Barba — R$50
-</option>
-
-<option value="Corte + Sobrancelha|35">
-Corte + Sobrancelha — R$35
-</option>
-
-<option value="Corte + Barba + Sobrancelha|55">
-Corte + Barba + Sobrancelha — R$55
-</option>
-
-<option value="Corte + Hidratação|45">
-Corte + Hidratação — R$45
-</option>
-
-<option value="Corte + Relaxamento|75">
-Corte + Relaxamento — R$75
-</option>
-
-<option value="Corte + Pigmentação|50">
-Corte + Pigmentação — R$50
-</option>
-
-<option value="Corte + Luzes|80">
-Corte + Luzes — R$80
-</option>
-
-<option value="Corte + Platinado|130">
-Corte + Platinado — R$130
-</option>
-
-<option value="Corte + Selagem|90">
-Corte + Selagem — R$90
-</option>
-
-</optgroup>
-
-<optgroup label="👑 PLANOS">
-
-<option value="Classic|99.90">
-Plano Classic — R$99,90/mês
-</option>
-
-<option value="Premium|179.90">
-Plano Premium — R$179,90/mês
-</option>
-
-<option value="Black|229.90">
-Plano Black — R$229,90/mês
-</option>
-
-</optgroup>
-
-</select>
-
-<input type="date" id="data">
-
-<select id="hora">
-
-<option value="">
-Selecione o horário
-</option>
-
-</select>
-
-<p id="proximoHorario"></p>
-
-<p id="horariosRestantes"></p>
-
-<button onclick="agendar()">
-
-Confirmar Agendamento
-
-</button>
-
-</section>
-
-<!-- REDES -->
-
-<section class="redes">
-
-<h2>
-📲 Siga a Barbearia Geovas
-</h2>
-
-<div class="social-links">
-
-<a
-href="https://instagram.com/barbearia_geovas"
-target="_blank">
-
-Instagram
-
-</a>
-
-<a
-href="https://wa.me/5531987930848"
-target="_blank">
-
-WhatsApp
-
-</a>
-
-</div>
-
-</section>
-
-<!-- WHATS FIXO -->
-
-<a
-href="https://wa.me/5531987930848"
-class="whatsapp-fixo"
-target="_blank">
-
-💬
-
-</a>
-
-<!-- FOOTER -->
-
-<footer>
-
-<p>
-© 2026 Barbearia Geovas -
-Todos os direitos reservados
-</p>
-
-</footer>
-
-<script type="module" src="script.js"></script>
-
+    <header>
+        <div class="logo-area">
+            <img src="img/logo.png.jpeg" class="logo" alt="Logo Barbearia Geovas">
+            <h1>Barbearia Geovas</h1>
+        </div>
+        <a href="login.html" class="admin-link">
+            <i class="fa-regular fa-user"></i> Área Admin
+        </a>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Estilo, Precisão e Elegância</h2>
+            <p>Transformando visual e autoestima com cortes modernos e atendimento profissional.</p>
+            <p id="statusBarbearia"></p>
+            <div class="hero-buttons">
+                <a href="#agendamento" class="btn-agendar">
+                    <i class="fa-regular fa-calendar"></i> Agendar Agora
+                </a>
+                <a href="https://wa.me/5531987930848" target="_blank" class="btn-whats">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="trabalhos">
+        <h2 class="titulo-section">🔥 Meus Trabalhos</h2>
+
+        <div class="trabalhos-container">
+            <div class="carrossel">
+                <button class="prev" onclick="mudarSlide(-1)" aria-label="Slide anterior">❮</button>
+                <div class="slides">
+                    <img src="img/corte1.jpg.jpeg" class="slide" alt="Corte 1">
+                    <img src="img/corte2.jpg.jpeg" class="slide" alt="Corte 2">
+                    <img src="img/corte3.jpg.jpeg" class="slide" alt="Corte 3">
+                    <img src="img/corte4.jpg.jpeg" class="slide" alt="Corte 4">
+                    <img src="img/corte5.jpg.jpeg" class="slide" alt="Corte 5">
+                    <img src="img/corte6.jpg.jpeg" class="slide" alt="Corte 6">
+                    
+                    <img src="img/corte7.jpg.jpeg" class="slide" alt="Corte 7">
+                    <img src="img/corte8.jpg.jpeg" class="slide" alt="Corte 8">
+                    <img src="img/corte9.jpg.jpeg" class="slide" alt="Corte 9">
+                    <img src="img/corte10.jpg.jpeg" class="slide" alt="Corte 10">
+                </div>
+                <button class="next" onclick="mudarSlide(1)" aria-label="Próximo slide">❯</button>
+            </div>
+
+            <section class="funcionamento-premium">
+                <div class="funcionamento-card">
+                    <div class="funcionamento-topo">
+                        <div class="icone-funcionamento">⏰</div>
+                        <div>
+                            <h2>Funcionamento Oficial</h2>
+                            <p>Atendimento com horário marcado</p>
+                        </div>
+                    </div>
+
+                    <div class="horarios">
+                        <div class="linha"><span>Segunda-feira</span><strong class="fechado">FECHADO</strong></div>
+                        <div class="linha"><span>Terça-feira</span><strong>09h às 18h</strong></div>
+                        <div class="linha"><span>Quarta-feira</span><strong>09h às 18h</strong></div>
+                        <div class="linha"><span>Quinta-feira</span><strong>09h às 19h30</strong></div>
+                        <div class="linha"><span>Sexta-feira</span><strong>08h às 20h</strong></div>
+                        <div class="linha"><span>Sábado</span><strong>07h às 19h</strong></div>
+                        <div class="linha"><span>Domingo</span><strong class="fechado">FECHADO</strong></div>
+                    </div>
+
+                    <div class="info-extra">
+                        Horários especiais podem ser ajustados em datas comemorativas e feriados.
+                    </div>
+
+                    <div class="localizacao">
+                        <h3>📍 Nossa Localização</h3>
+                        <p>
+                            R. Ataláia, 485 - São João<br>
+                            Betim - MG, 32655-532
+                        </p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=R.+Atal%C3%A1ia,+485,+S%C3%A3o+Jo%C3%A3o,+Betim+-+MG,+32655-532"
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="btn-maps">
+                            🚗 Como Chegar
+                        </a>
+                    </div>
+
+                    <a href="#agendamento" class="btn-agendar-interno">
+                        AGENDAR AGORA
+                    </a>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <section class="agendamento" id="agendamento">
+        <h2>Agendar Horário</h2>
+        <input type="text" id="nome" placeholder="Seu Nome">
+
+        <select id="servico">
+            <optgroup label="✂ SERVIÇOS">
+                <option value="Corte / Disfarçado|30">Corte / Disfarçado — R$30</option>
+                <option value="Barba|25">Barba — R$25</option>
+                <option value="Sobrancelha|5">Sobrancelha — R$5</option>
+                <option value="Pezinho|10">Pezinho — R$10</option>
+                <option value="Corte na Tesoura|35">Corte na Tesoura — R$35</option>
+                <option value="Hidratação|20">Hidratação — R$20</option>
+                <option value="Relaxamento|50">Relaxamento — R$50</option>
+                <option value="Lavagem simples|10">Lavagem simples — R$10</option>
+                <option value="Lavagem + finalização|20">Lavagem + finalização — R$20</option>
+                <option value="Selagem|90">Selagem — R$90</option>
+                <option value="Pigmentação + Corte|50">Pigmentação + Corte — R$50</option>
+                <option value="Luzes|80">Luzes — R$80</option>
+                <option value="Platinado|130">Platinado — R$130</option>
+                <option value="Risco Simples|5">Risco Simples — R$5</option>
+                <option value="Design / Freestyle|10">Design / Freestyle — R$10</option>
+            </optgroup>
+            <optgroup label="💎 COMBOS">
+                <option value="Corte + Barba|50">Corte + Barba — R$50</option>
+                <option value="Corte + Sobrancelha|35">Corte + Sobrancelha — R$35</option>
+                <option value="Corte + Barba + Sobrancelha|55">Corte + Barba + Sobrancelha — R$55</option>
+                <option value="Corte + Hidratação|45">Corte + Hidratação — R$45</option>
+                <option value="Corte + Relaxamento|75">Corte + Relaxamento — R$75</option>
+                <option value="Corte + Pigmentação|50">Corte + Pigmentação — R$50</option>
+                <option value="Corte + Luzes|80">Corte + Luzes — R$80</option>
+                <option value="Corte + Platinado|130">Corte + Platinado — R$130</option>
+                <option value="Corte + Selagem|90">Corte + Selagem — R$90</option>
+            </optgroup>
+            <optgroup label="👑 PLANOS">
+                <option value="Classic TER a QUIN|99.90">Plano Classic (TER a QUIN) — R$99,90/mês</option>
+                <option value="Premium|179.90">Plano Premium — R$179,90/mês</option>
+                <option value="Black|229.90">Plano Black — R$229,90/mês</option>
+            </optgroup>
+        </select>
+
+        <input type="date" id="data">
+
+        <select id="hora">
+            <option value="">Selecione o horário</option>
+        </select>
+
+        <p id="proximoHorario"></p>
+        <p id="horariosRestantes"></p>
+
+        <button onclick="agendar()">Confirmar Agendamento</button>
+    </section>
+
+    <section class="redes">
+        <h2>📲 Siga a Barbearia Geovas</h2>
+        <div class="social-links">
+            <a href="https://instagram.com/barbearia_geovas" target="_blank">Instagram</a>
+            <a href="https://wa.me/5531987930848" target="_blank">WhatsApp</a>
+        </div>
+    </section>
+
+    <section class="avaliacoes">
+        <h2><i class="fa-solid fa-star"></i> Avaliações dos Clientes</h2>
+        
+        <div class="secao-avaliacoes-container">
+            <div class="form-avaliacao-box">
+                <h3>Deixe seu feedback</h3>
+                <input type="text" id="aval-nome" placeholder="Seu Nome" required>
+                
+                <div class="rating-selection">
+                    <span>Sua Nota:</span>
+                    <select id="aval-nota">
+                        <option value="5">⭐⭐⭐⭐⭐ (Excelente)</option>
+                        <option value="4">⭐⭐⭐⭐ (Muito Bom)</option>
+                        <option value="3">⭐⭐⭐ (Bom)</option>
+                        <option value="2">⭐⭐ (Regular)</option>
+                        <option value="1">⭐ (Pode Melhorar)</option>
+                    </select>
+                </div>
+                
+                <textarea id="aval-comentario" placeholder="Escreva o que achou do corte e do atendimento..." rows="3" required></textarea>
+                
+                <button onclick="enviarAvaliacao()" id="btn-enviar-aval">Enviar Comentário</button>
+            </div>
+
+            <div class="avaliacoes-container-cards" id="containerAvaliacoesReais">
+                <p class="carregando-comentarios">Buscando depoimentos reais...</p>
+            </div>
+        </div>
+    </section>
+
+    <a href="https://wa.me/5531987930848" class="whatsapp-fixo" target="_blank" aria-label="Contato via WhatsApp">
+        💬
+    </a>
+
+    <footer>
+        <p>© 2026 Barbearia Geovas - Todos os direitos reservados</p>
+    </footer>
+
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>
