@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barbearia Geovas</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="img/logo.png.jpeg">
+    <link rel="icon" type="image/jpeg" sizes="192x192" href="img/logo.png.jpeg">
+    <link rel="icon" type="image/jpeg" sizes="32x32" href="img/logo.png.jpeg">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -106,7 +111,6 @@
         </div>
     </section>
 
-    <!-- SEÇÃO ADAPTADA PARA OS NOMES SALVOS NA SUA PASTA -->
     <section id="espaco" class="espaco">
         <div class="container-espaco">
             <h2 class="titulo-section">💈 Nosso Espaço</h2>
@@ -116,7 +120,6 @@
             </p>
 
             <div class="galeria-espaco">
-                <!-- FOTOS (.jpg.jpeg) -->
                 <figure>
                     <img src="img/espaco1.jpg.jpeg" alt="Interior da barbearia e cadeira premium">
                 </figure>
@@ -133,7 +136,6 @@
                     <img src="img/espaco5.jpg.jpeg" alt="Lavatório moderno e confortável">
                 </figure>
 
-                <!-- VÍDEOS (.mp4.mp4) -->
                 <figure>
                     <video src="img/espaco6.mp4.mp4" autoplay loop muted playsinline></video>
                 </figure>
@@ -238,9 +240,8 @@
         💬
     </a>
 
-    <!-- CAIXA DO LIGHTBOX (ONDE A MÍDIA GRANDE VAI APARECER) -->
     <div id="lightbox" class="lightbox" onclick="fecharLightbox()">
-        <span class="lightbox-fechar">&times;</span>
+        <span class="lightbox-fechar">×</span>
         <div class="lightbox-conteudo" onclick="event.stopPropagation()"></div>
     </div>
 
