@@ -190,7 +190,6 @@ async function gerarHorarios() {
     atual.setMinutes(atual.getMinutes() + 60); 
   }
 
-  // Captura a data de hoje de forma correta e limpa
   const hoje = new Date();
   let anoHoje = hoje.getFullYear(); 
   let mesHoje = String(hoje.getMonth() + 1).padStart(2, "0");
@@ -425,7 +424,7 @@ function verificarStatus() {
   let aberto = false;
 
   if (dia === 1 || dia === 0) {
-    aberto = false;
+    abento = false;
   }
   else if ((dia === 2 || dia === 3) && horaAtual >= 9 && horaAtual < 18) {
     aberto = true;
@@ -574,4 +573,50 @@ window.enviarAvaliacao = async function() {
       color: "#fff"
     });
   }
+};
+
+/* ==========================================================================
+   ROTINA DO LIGHTBOX (ABRIR MÍDIA EXPANDIDA NO CLIQUE)
+   ========================================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  const figurasEspaco = document.querySelectorAll(".galeria-espaco figure");
+  
+  figurasEspaco.forEach(figure => {
+    figure.addEventListener("click", () => {
+      const midiaOriginal = figure.querySelector("img, video");
+      if (!midiaOriginal) return;
+
+      const lightbox = document.getElementById("lightbox");
+      const containerConteudo = lightbox.querySelector(".lightbox-conteudo");
+      
+      containerConteudo.innerHTML = "";
+
+      if (midiaOriginal.tagName.toLowerCase() === "img") {
+        const novaImg = midiaOriginal.cloneNode(true);
+        containerConteudo.appendChild(novaImg);
+      } 
+      else if (midiaOriginal.tagName.toLowerCase() === "video") {
+        const novoVideo = document.createElement("video");
+        novoVideo.src = midiaOriginal.src;
+        novoVideo.controls = true; 
+        novoVideo.autoplay = true;
+        novoVideo.playsinline = true;
+        containerConteudo.appendChild(novoVideo);
+      }
+
+      lightbox.style.display = "flex";
+    });
+  });
+});
+
+window.fecharLightbox = function() {
+  const lightbox = document.getElementById("lightbox");
+  const containerConteudo = lightbox.querySelector(".lightbox-conteudo");
+  
+  const videoRodando = containerConteudo.querySelector("video");
+  if (videoRodando) {
+    videoRodando.pause();
+  }
+
+  lightbox.style.display = "none";
 };

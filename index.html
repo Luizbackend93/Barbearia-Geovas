@@ -87,7 +87,7 @@
                     <div class="localizacao">
                         <h3>📍 Nossa Localização</h3>
                         <p>
-                            R. Ataláia, 485 - São João<br>
+                            R. Ataláia, 585 - São João<br>
                             Betim - MG, 32655-532
                         </p>
                         <a href="https://www.google.com/maps/search/?api=1&query=R.+Atal%C3%A1ia,+485,+S%C3%A3o+Jo%C3%A3o,+Betim+-+MG,+32655-532"
@@ -106,6 +106,7 @@
         </div>
     </section>
 
+    <!-- SEÇÃO ADAPTADA PARA OS NOMES SALVOS NA SUA PASTA -->
     <section id="espaco" class="espaco">
         <div class="container-espaco">
             <h2 class="titulo-section">💈 Nosso Espaço</h2>
@@ -115,17 +116,29 @@
             </p>
 
             <div class="galeria-espaco">
+                <!-- FOTOS (.jpg.jpeg) -->
                 <figure>
-                    <img src="img/espaco1.jpg" alt="Fachada da barbearia">
+                    <img src="img/espaco1.jpg.jpeg" alt="Interior da barbearia e cadeira premium">
                 </figure>
                 <figure>
-                    <img src="img/espaco2.jpg" alt="Cadeiras de atendimento">
+                    <img src="img/espaco2.jpg.jpeg" alt="Iluminação moderna no teto e área de corte">
                 </figure>
                 <figure>
-                    <img src="img/espaco3.jpg" alt="Área da recepção">
+                    <img src="img/espaco3.jpg.jpeg" alt="Visão geral do salão de atendimento">
                 </figure>
                 <figure>
-                    <img src="img/espaco4.jpg" alt="Detalhes do ambiente interno">
+                    <img src="img/espaco4.jpg.jpeg" alt="Área de recepção com bebedouro">
+                </figure>
+                <figure>
+                    <img src="img/espaco5.jpg.jpeg" alt="Lavatório moderno e confortável">
+                </figure>
+
+                <!-- VÍDEOS (.mp4.mp4) -->
+                <figure>
+                    <video src="img/espaco6.mp4.mp4" autoplay loop muted playsinline></video>
+                </figure>
+                <figure>
+                    <video src="img/espaco7.mp4.mp4" autoplay loop muted playsinline></video>
                 </figure>
             </div>
         </div>
@@ -224,6 +237,12 @@
     <a href="https://wa.me/5531987930848" class="whatsapp-fixo" target="_blank" aria-label="Contato via WhatsApp">
         💬
     </a>
+
+    <!-- CAIXA DO LIGHTBOX (ONDE A MÍDIA GRANDE VAI APARECER) -->
+    <div id="lightbox" class="lightbox" onclick="fecharLightbox()">
+        <span class="lightbox-fechar">&times;</span>
+        <div class="lightbox-conteudo" onclick="event.stopPropagation()"></div>
+    </div>
 
     <footer>
         <p>© 2026 Barbearia Geovas - Todos os direitos reservados</p>

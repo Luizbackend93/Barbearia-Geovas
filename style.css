@@ -414,7 +414,7 @@ header {
 }
 
 /* ==========================================================================
-   SEÇÃO: NOSSO ESPAÇO (NOVA GALERIA COMPLETA)
+   SEÇÃO: NOSSO ESPAÇO (SUPORTE UNIFICADO PARA FOTO E VÍDEO CORRIGIDO)
    ========================================================================== */
 .espaco {
     background: #050505;
@@ -450,9 +450,12 @@ header {
     border: 1px solid rgba(212, 175, 55, 0.15);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     background: #000;
+    cursor: pointer; /* Indica ao usuário que o elemento é clicável */
 }
 
-.galeria-espaco img {
+/* Aplica os estilos idênticos tanto em imagens quanto em vídeos do ambiente */
+.galeria-espaco img,
+.galeria-espaco video {
     width: 100%;
     height: 280px;
     object-fit: cover;
@@ -464,7 +467,8 @@ header {
     border-color: #d4af37;
 }
 
-.galeria-espaco figure:hover img {
+.galeria-espaco figure:hover img,
+.galeria-espaco figure:hover video {
     transform: scale(1.06);
 }
 
@@ -771,7 +775,7 @@ footer {
 }
 
 /* ==========================================================================
-   TELA DE LOGIN ADMINISTRADOR (LOGIN.HTML - PREMIUM COM FUNDO)
+   TELA DE LOGIN ADMINISTRADOR (LOGIN.HTML - PREMIUM NO COMPUTADOR)
    ========================================================================== */
 .login-container {
     display: flex;
@@ -781,9 +785,9 @@ footer {
     width: 100vw;
     padding: 20px;
     position: relative;
-    /* Aplica a imagem de fundo com efeito escurecido para dar profundidade e contraste */
     background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.85)),
                 url("img/barbeiro-bg.jpg.jpeg") center center/70% no-repeat;
+    background-color: #000;
 }
 
 .login-box {
@@ -964,7 +968,6 @@ header.admin-header {
     width: 100%;
 }
 
-/* Mapeamento perfeito da classe criada pela função carregarAdmin() do script.js */
 .agendamento-item {
     background: #141414 !important;
     border: 1px solid rgba(212, 175, 55, 0.15) !important;
@@ -1006,6 +1009,69 @@ header.admin-header {
     background: #ff4d4d !important;
     color: #fff !important;
     box-shadow: 0 0 15px rgba(255, 77, 77, 0.5) !important;
+}
+
+/* ==========================================================================
+   SISTEMA DE LIGHTBOX (JANELA EXPANDIDA PARA FOTOS E VÍDEOS)
+   ========================================================================== */
+.lightbox {
+    display: none; /* Inicia oculto */
+    position: fixed;
+    z-index: 10000; /* Sobrepõe toda a tela */
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.94);
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.lightbox-conteudo {
+    max-width: 85%;
+    max-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-conteudo img,
+.lightbox-conteudo video {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 0 35px rgba(212, 175, 55, 0.25);
+    animation: zoomIn 0.3s ease;
+}
+
+.lightbox-fechar {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: #d4af37;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+    user-select: none;
+}
+
+.lightbox-fechar:hover {
+    color: #fff;
+    transform: scale(1.1);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
 
 /* ==========================================================================
@@ -1089,7 +1155,9 @@ header.admin-header {
         gap: 15px;
     }
 
-    .galeria-espaco img {
+    /* Ajuste para que fotos e vídeos fiquem com a mesma altura no celular */
+    .galeria-espaco img,
+    .galeria-espaco video {
         height: 240px;
     }
 
@@ -1127,6 +1195,28 @@ header.admin-header {
     
     .form-avaliacao-box {
         width: 100%;
+    }
+
+    /* CORREÇÃO DO FUNDO DE LOGIN SÓ NO CELULAR */
+    .login-container {
+        background: linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.88)),
+                    url("img/barbeiro-bg.jpg.jpeg") center 10%/cover no-repeat !important;
+    }
+    
+    .login-box {
+        padding: 35px 20px;
+        max-width: 92%;
+    }
+
+    /* Responsividade específica do Lightbox em telas mobile */
+    .lightbox-fechar {
+        top: 20px;
+        right: 25px;
+        font-size: 40px;
+    }
+    
+    .lightbox-conteudo {
+        max-width: 92%;
     }
 
     /* Responsividade específica da dashboard do admin */
