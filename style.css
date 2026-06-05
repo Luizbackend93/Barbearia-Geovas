@@ -178,7 +178,7 @@ header {
 }
 
 /* ==========================================================================
-   TRABALHOS & CARROSSEL
+   TRABALHOS & CARROSSEL (ESTRUTURA FLEX + FLYER INTEGRADO)
    ========================================================================== */
 #trabalhos {
     background: #050505;
@@ -200,6 +200,16 @@ header {
     flex-wrap: wrap;
 }
 
+/* Container Flex que posiciona o carrossel e o flyer lado a lado */
+.conteudo-trabalhos-flex {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
 .carrossel {
     position: relative;
     width: 100%;
@@ -210,6 +220,23 @@ header {
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(212, 175, 55, 0.25);
     background: #000;
+}
+
+/* Configuração do Bloco do Flyer Menor */
+.conteudo-trabalhos-flex .flyer-assinaturas {
+    flex: 1;
+    max-width: 350px; /* Tamanho reduzido conforme solicitado */
+    width: 100%;
+}
+
+/* Estilização da imagem interna do Flyer */
+.flyer-assinaturas .img-flyer {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    display: block;
 }
 
 .slides {
@@ -450,10 +477,9 @@ header {
     border: 1px solid rgba(212, 175, 55, 0.15);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     background: #000;
-    cursor: pointer; /* Indica ao usuário que o elemento é clicável */
+    cursor: pointer;
 }
 
-/* Aplica os estilos idênticos tanto em imagens quanto em vídeos do ambiente */
 .galeria-espaco img,
 .galeria-espaco video {
     width: 100%;
@@ -1015,9 +1041,9 @@ header.admin-header {
    SISTEMA DE LIGHTBOX (JANELA EXPANDIDA PARA FOTOS E VÍDEOS)
    ========================================================================== */
 .lightbox {
-    display: none; /* Inicia oculto */
+    display: none;
     position: fixed;
-    z-index: 10000; /* Sobrepõe toda a tela */
+    z-index: 10000;
     inset: 0;
     width: 100vw;
     height: 100vh;
@@ -1128,6 +1154,18 @@ header.admin-header {
 }
 
 @media (max-width: 768px) {
+    /* Ajuste Responsivo do Bloco de Trabalhos + Flyer */
+    .conteudo-trabalhos-flex {
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .conteudo-trabalhos-flex .flyer-assinaturas {
+        max-width: 100%; /* No celular ele expande proporcionalmente até o limite do container */
+        padding: 0 10px;
+    }
+
     .hero-content h2 {
         font-size: 36px;
     }
@@ -1155,7 +1193,6 @@ header.admin-header {
         gap: 15px;
     }
 
-    /* Ajuste para que fotos e vídeos fiquem com a mesma altura no celular */
     .galeria-espaco img,
     .galeria-espaco video {
         height: 240px;
@@ -1197,7 +1234,6 @@ header.admin-header {
         width: 100%;
     }
 
-    /* CORREÇÃO DO FUNDO DE LOGIN SÓ NO CELULAR */
     .login-container {
         background: linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.88)),
                     url("img/barbeiro-bg.jpg.jpeg") center 10%/cover no-repeat !important;
@@ -1208,7 +1244,6 @@ header.admin-header {
         max-width: 92%;
     }
 
-    /* Responsividade específica do Lightbox em telas mobile */
     .lightbox-fechar {
         top: 20px;
         right: 25px;
@@ -1219,7 +1254,6 @@ header.admin-header {
         max-width: 92%;
     }
 
-    /* Responsividade específica da dashboard do admin */
     header.admin-header {
         padding: 15px 20px;
     }
